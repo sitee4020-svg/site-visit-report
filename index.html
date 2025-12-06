@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>GK Energy - Site Visit Report System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -25,6 +25,8 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
         }
 
         body {
@@ -33,6 +35,7 @@
             background-color: #f5f5f5;
             color: #333;
             padding: 10px;
+            touch-action: manipulation;
         }
 
         .container {
@@ -87,6 +90,7 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            touch-action: manipulation;
         }
 
         .mode-btn.active {
@@ -121,6 +125,7 @@
             margin: 10px 0;
             border: 1px solid var(--border-color);
             border-radius: 4px;
+            font-size: 16px; /* Prevents zoom on iOS */
         }
 
         .login-container button {
@@ -133,6 +138,7 @@
             cursor: pointer;
             font-weight: bold;
             margin-top: 10px;
+            touch-action: manipulation;
         }
 
         .login-container button:hover {
@@ -156,6 +162,7 @@
             padding: 5px 10px;
             border-radius: 4px;
             cursor: pointer;
+            touch-action: manipulation;
         }
 
         /* Form Section Styles */
@@ -219,9 +226,10 @@
             padding: 12px 15px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: 16px; /* Prevents zoom on iOS */
             transition: all 0.3s;
             background-color: #f9f9f9;
+            touch-action: manipulation;
         }
 
         input:focus,
@@ -232,6 +240,22 @@
             box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
         }
 
+        /* Mobile-friendly date inputs */
+        input[type="date"] {
+            min-height: 44px;
+        }
+
+        /* Mobile-friendly number inputs */
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
+
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
         .checkbox-group,
         .radio-group {
             display: flex;
@@ -240,6 +264,8 @@
             padding: 5px;
             border-radius: 4px;
             transition: background 0.2s;
+            touch-action: manipulation;
+            min-height: 44px; /* Better touch target */
         }
 
         .checkbox-group:hover,
@@ -250,9 +276,10 @@
         .checkbox-group input,
         .radio-group input {
             margin-right: 10px;
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
+            flex-shrink: 0;
         }
 
         .checkbox-container,
@@ -282,6 +309,8 @@
             border-radius: 6px;
             border: 1px solid #dee2e6;
             transition: all 0.2s;
+            touch-action: manipulation;
+            min-height: 44px; /* Better touch target */
         }
 
         .project-item:hover {
@@ -291,6 +320,7 @@
 
         .project-item input {
             margin-right: 10px;
+            flex-shrink: 0;
         }
 
         /* Image Upload Section */
@@ -337,13 +367,15 @@
             align-items: center;
             gap: 8px;
             transition: all 0.3s;
+            touch-action: manipulation;
+            min-height: 44px;
         }
 
         .upload-btn:hover {
             background-color: var(--primary-dark);
         }
 
-        /* Signature Section */
+        /* Signature Section - Fixed for mobile */
         .signature-area {
             margin-top: 30px;
             display: flex;
@@ -358,14 +390,32 @@
             margin-bottom: 20px;
         }
 
-        .signature-canvas {
+        .signature-canvas-container {
+            position: relative;
             width: 100%;
-            height: 150px;
+            height: 200px;
             border: 2px solid #ddd;
             border-radius: 8px;
             background-color: white;
-            cursor: crosshair;
+            overflow: hidden;
             touch-action: none;
+        }
+
+        .signature-canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+            touch-action: none;
+        }
+
+        .signature-placeholder {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #999;
+            font-style: italic;
+            pointer-events: none;
         }
 
         .signature-actions {
@@ -381,6 +431,11 @@
             cursor: pointer;
             font-weight: 600;
             transition: background 0.3s;
+            touch-action: manipulation;
+            min-height: 44px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .sig-btn-clear {
@@ -415,6 +470,8 @@
             align-items: center;
             gap: 10px;
             transition: all 0.3s;
+            touch-action: manipulation;
+            min-height: 50px;
         }
 
         .btn-submit {
@@ -467,6 +524,8 @@
             flex: 1;
             min-width: 200px;
             padding: 10px 15px;
+            font-size: 16px;
+            min-height: 44px;
         }
 
         .reports-table-container {
@@ -503,12 +562,17 @@
         }
 
         .action-btn {
-            padding: 6px 12px;
+            padding: 8px 12px;
             border: none;
             border-radius: 4px;
             cursor: pointer;
             font-size: 0.9rem;
             margin-right: 5px;
+            touch-action: manipulation;
+            min-height: 36px;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
         }
 
         .view-btn {
@@ -537,6 +601,7 @@
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
 
         .modal-content {
@@ -557,6 +622,11 @@
             font-size: 28px;
             cursor: pointer;
             color: #888;
+            width: 44px;
+            height: 44px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         .modal-body {
@@ -564,6 +634,7 @@
             max-height: 70vh;
             overflow-y: auto;
             padding-right: 10px;
+            -webkit-overflow-scrolling: touch;
         }
 
         /* Status Messages */
@@ -683,6 +754,19 @@
             .dashboard-stats {
                 grid-template-columns: repeat(2, 1fr);
             }
+            
+            .project-grid {
+                grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+            }
+            
+            .data-controls {
+                flex-direction: column;
+            }
+            
+            .data-controls input,
+            .data-controls select {
+                min-width: 100%;
+            }
         }
 
         @media (max-width: 480px) {
@@ -692,6 +776,19 @@
 
             .dashboard-stats {
                 grid-template-columns: 1fr;
+            }
+            
+            .app-header h1 {
+                font-size: 1.4rem;
+            }
+            
+            .reports-table {
+                font-size: 0.9rem;
+            }
+            
+            .reports-table th,
+            .reports-table td {
+                padding: 8px 10px;
             }
         }
 
@@ -714,7 +811,7 @@
             }
 
             .signature-canvas {
-                border: 1px solid #000;
+                border: 1px solid #000 !important;
             }
         }
     </style>
@@ -1429,7 +1526,7 @@
                         </div>
                     </div>
 
-                    <!-- Signature Section -->
+                    <!-- Signature Section - FIXED FOR MOBILE -->
                     <div class="section">
                         <div class="section-title">
                             <i class="fas fa-signature"></i>
@@ -1438,24 +1535,30 @@
                         <div class="signature-area">
                             <div class="signature-box">
                                 <label class="signature-label">Farmer's Signature</label>
-                                <canvas id="farmerSignature" class="signature-canvas"></canvas>
+                                <div class="signature-canvas-container">
+                                    <canvas id="farmerSignature" class="signature-canvas"></canvas>
+                                    <div class="signature-placeholder" id="farmerPlaceholder">Sign here</div>
+                                </div>
                                 <div class="signature-actions">
-                                    <button type="button" class="sig-btn sig-btn-clear" onclick="clearSignature('farmerSignature')">
+                                    <button type="button" class="sig-btn sig-btn-clear" onclick="clearSignature('farmerSignature', 'farmerPlaceholder')">
                                         <i class="fas fa-eraser"></i> Clear
                                     </button>
-                                    <button type="button" class="sig-btn sig-btn-save" onclick="saveSignature('farmerSignature')">
+                                    <button type="button" class="sig-btn sig-btn-save" onclick="saveSignature('farmerSignature', 'farmerPlaceholder')">
                                         <i class="fas fa-save"></i> Save
                                     </button>
                                 </div>
                             </div>
                             <div class="signature-box">
                                 <label class="signature-label">Engineer's Signature</label>
-                                <canvas id="engineerSignature" class="signature-canvas"></canvas>
+                                <div class="signature-canvas-container">
+                                    <canvas id="engineerSignature" class="signature-canvas"></canvas>
+                                    <div class="signature-placeholder" id="engineerPlaceholder">Sign here</div>
+                                </div>
                                 <div class="signature-actions">
-                                    <button type="button" class="sig-btn sig-btn-clear" onclick="clearSignature('engineerSignature')">
+                                    <button type="button" class="sig-btn sig-btn-clear" onclick="clearSignature('engineerSignature', 'engineerPlaceholder')">
                                         <i class="fas fa-eraser"></i> Clear
                                     </button>
-                                    <button type="button" class="sig-btn sig-btn-save" onclick="saveSignature('engineerSignature')">
+                                    <button type="button" class="sig-btn sig-btn-save" onclick="saveSignature('engineerSignature', 'engineerPlaceholder')">
                                         <i class="fas fa-save"></i> Save
                                     </button>
                                 </div>
@@ -1581,14 +1684,19 @@
         };
 
         let currentUser = null;
+        let signatureContexts = {};
 
         // Initialize the application
         document.addEventListener('DOMContentLoaded', function() {
             // Check if user is already logged in
             const savedUser = localStorage.getItem('gkCurrentUser');
             if (savedUser) {
-                currentUser = JSON.parse(savedUser);
-                showApp();
+                try {
+                    currentUser = JSON.parse(savedUser);
+                    showApp();
+                } catch (e) {
+                    localStorage.removeItem('gkCurrentUser');
+                }
             }
             
             // Set current date
@@ -1616,7 +1724,8 @@
             });
             
             // Add phone number validation
-            document.getElementById('phone').addEventListener('input', function(e) {
+            const phoneInput = document.getElementById('phone');
+            phoneInput.addEventListener('input', function(e) {
                 this.value = this.value.replace(/[^0-9+]/g, '');
             });
             
@@ -1624,7 +1733,241 @@
             if (currentUser && currentUser.role === 'engineer') {
                 document.getElementById('engineerName').value = currentUser.name;
             }
+            
+            // Fix for date inputs on mobile
+            document.querySelectorAll('input[type="date"]').forEach(input => {
+                input.addEventListener('focus', function() {
+                    this.type = 'date';
+                });
+                input.addEventListener('blur', function() {
+                    if (!this.value) {
+                        this.type = 'text';
+                        this.placeholder = 'YYYY-MM-DD';
+                    }
+                });
+            });
+            
+            // Initialize image upload
+            initImageUpload();
+            
+            // Prevent form submission on Enter key
+            document.addEventListener('keydown', function(e) {
+                if (e.key === 'Enter' && e.target.type !== 'textarea') {
+                    e.preventDefault();
+                }
+            });
         });
+
+        // Enhanced signature canvas functionality
+        function initSignatureCanvas(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            const container = canvas.parentElement;
+            const placeholderId = canvasId.replace('Signature', 'Placeholder');
+            const placeholder = document.getElementById(placeholderId);
+            
+            // Set canvas dimensions
+            const setCanvasSize = () => {
+                const rect = container.getBoundingClientRect();
+                canvas.width = rect.width;
+                canvas.height = rect.height;
+                
+                const ctx = canvas.getContext('2d');
+                signatureContexts[canvasId] = ctx;
+                
+                // Set canvas style
+                ctx.lineWidth = 2;
+                ctx.lineCap = 'round';
+                ctx.lineJoin = 'round';
+                ctx.strokeStyle = '#000000';
+                
+                // Clear canvas initially
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            };
+            
+            // Initial size set
+            setCanvasSize();
+            
+            // Resize handler
+            window.addEventListener('resize', setCanvasSize);
+            
+            let isDrawing = false;
+            let lastX = 0;
+            let lastY = 0;
+            
+            // Get coordinates function
+            const getCoordinates = (e) => {
+                const rect = canvas.getBoundingClientRect();
+                let clientX, clientY;
+                
+                if (e.type.includes('touch')) {
+                    const touch = e.touches[0] || e.changedTouches[0];
+                    clientX = touch.clientX;
+                    clientY = touch.clientY;
+                } else {
+                    clientX = e.clientX;
+                    clientY = e.clientY;
+                }
+                
+                return {
+                    x: clientX - rect.left,
+                    y: clientY - rect.top
+                };
+            };
+            
+            // Start drawing
+            const startDrawing = (e) => {
+                e.preventDefault();
+                isDrawing = true;
+                const coords = getCoordinates(e);
+                lastX = coords.x;
+                lastY = coords.y;
+                
+                const ctx = signatureContexts[canvasId];
+                ctx.beginPath();
+                ctx.moveTo(lastX, lastY);
+                
+                // Hide placeholder when drawing starts
+                if (placeholder) {
+                    placeholder.style.display = 'none';
+                }
+            };
+            
+            // Draw
+            const draw = (e) => {
+                if (!isDrawing) return;
+                e.preventDefault();
+                
+                const coords = getCoordinates(e);
+                const currentX = coords.x;
+                const currentY = coords.y;
+                
+                const ctx = signatureContexts[canvasId];
+                ctx.lineTo(currentX, currentY);
+                ctx.stroke();
+                
+                lastX = currentX;
+                lastY = currentY;
+            };
+            
+            // Stop drawing
+            const stopDrawing = () => {
+                isDrawing = false;
+            };
+            
+            // Mouse events
+            canvas.addEventListener('mousedown', startDrawing);
+            canvas.addEventListener('mousemove', draw);
+            canvas.addEventListener('mouseup', stopDrawing);
+            canvas.addEventListener('mouseout', stopDrawing);
+            
+            // Touch events with proper prevention
+            canvas.addEventListener('touchstart', (e) => {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                startDrawing(e);
+            }, { passive: false });
+            
+            canvas.addEventListener('touchmove', (e) => {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                draw(e);
+            }, { passive: false });
+            
+            canvas.addEventListener('touchend', (e) => {
+                if (e.cancelable) {
+                    e.preventDefault();
+                }
+                stopDrawing();
+            }, { passive: false });
+            
+            // Prevent page scrolling when touching canvas
+            container.addEventListener('touchmove', (e) => {
+                if (e.target === canvas) {
+                    e.preventDefault();
+                }
+            }, { passive: false });
+        }
+        
+        function clearSignature(canvasId, placeholderId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            // Show placeholder
+            const placeholder = document.getElementById(placeholderId);
+            if (placeholder) {
+                placeholder.style.display = 'block';
+            }
+            
+            showMessage('Signature cleared', 'success');
+        }
+        
+        function saveSignature(canvasId, placeholderId) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Check if signature is empty
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const isEmpty = Array.from(imageData.data).every(value => value === 0);
+            
+            if (isEmpty) {
+                showMessage('Please draw a signature first', 'error');
+                return;
+            }
+            
+            // Hide placeholder
+            const placeholder = document.getElementById(placeholderId);
+            if (placeholder) {
+                placeholder.style.display = 'none';
+            }
+            
+            showMessage('Signature saved successfully', 'success');
+        }
+        
+        function getSignatureData(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            return canvas.toDataURL('image/png');
+        }
+
+        // Image upload handling
+        function initImageUpload() {
+            document.querySelectorAll('.image-input').forEach(input => {
+                input.addEventListener('change', function(e) {
+                    const file = e.target.files[0];
+                    const previewId = 'preview' + this.id.slice(-1);
+                    const preview = document.getElementById(previewId);
+                    
+                    if (file) {
+                        // Check file size (5MB max)
+                        if (file.size > 5 * 1024 * 1024) {
+                            showMessage('File size must be less than 5MB', 'error');
+                            this.value = '';
+                            return;
+                        }
+                        
+                        // Check file type
+                        if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
+                            showMessage('Only JPG and PNG images are allowed', 'error');
+                            this.value = '';
+                            return;
+                        }
+                        
+                        const reader = new FileReader();
+                        reader.onload = function(e) {
+                            preview.src = e.target.result;
+                            preview.style.display = 'block';
+                        }
+                        reader.readAsDataURL(file);
+                    }
+                });
+            });
+        }
+
+        function triggerUpload(inputId) {
+            document.getElementById(inputId).click();
+        }
 
         // Login function
         function login() {
@@ -1647,7 +1990,7 @@
                 localStorage.setItem('gkCurrentUser', JSON.stringify(currentUser));
                 
                 showApp();
-                showMessage(`Welcome, ${currentUser.name}!`, 'success', 'statusMessage');
+                showMessage(`Welcome, ${currentUser.name}!`, 'success');
             } else {
                 showMessage('Invalid username or password', 'error', 'loginMessage');
             }
@@ -1716,144 +2059,7 @@
             }
         }
 
-        // Image upload handling
-        function triggerUpload(inputId) {
-            document.getElementById(inputId).click();
-        }
-
-        document.querySelectorAll('.image-input').forEach(input => {
-            input.addEventListener('change', function(e) {
-                const file = e.target.files[0];
-                const previewId = 'preview' + this.id.slice(-1);
-                const preview = document.getElementById(previewId);
-                
-                if (file) {
-                    // Check file size (5MB max)
-                    if (file.size > 5 * 1024 * 1024) {
-                        showMessage('File size must be less than 5MB', 'error');
-                        this.value = '';
-                        return;
-                    }
-                    
-                    // Check file type
-                    if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
-                        showMessage('Only JPG and PNG images are allowed', 'error');
-                        this.value = '';
-                        return;
-                    }
-                    
-                    const reader = new FileReader();
-                    reader.onload = function(e) {
-                        preview.src = e.target.result;
-                        preview.style.display = 'block';
-                    }
-                    reader.readAsDataURL(file);
-                }
-            });
-        });
-
-        // Signature canvas functionality
-        function initSignatureCanvas(canvasId) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            
-            // Set canvas dimensions
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-            
-            // Set canvas style
-            ctx.lineWidth = 2;
-            ctx.lineCap = 'round';
-            ctx.lineJoin = 'round';
-            ctx.strokeStyle = '#000000';
-            
-            let isDrawing = false;
-            let lastX = 0;
-            let lastY = 0;
-            
-            // Mouse events
-            canvas.addEventListener('mousedown', startDrawing);
-            canvas.addEventListener('mousemove', draw);
-            canvas.addEventListener('mouseup', stopDrawing);
-            canvas.addEventListener('mouseout', stopDrawing);
-            
-            // Touch events for mobile
-            canvas.addEventListener('touchstart', handleTouchStart);
-            canvas.addEventListener('touchmove', handleTouchMove);
-            canvas.addEventListener('touchend', stopDrawing);
-            
-            function startDrawing(e) {
-                isDrawing = true;
-                [lastX, lastY] = getCoordinates(e);
-            }
-            
-            function draw(e) {
-                if (!isDrawing) return;
-                e.preventDefault();
-                
-                const [x, y] = getCoordinates(e);
-                
-                ctx.beginPath();
-                ctx.moveTo(lastX, lastY);
-                ctx.lineTo(x, y);
-                ctx.stroke();
-                
-                [lastX, lastY] = [x, y];
-            }
-            
-            function stopDrawing() {
-                isDrawing = false;
-            }
-            
-            function handleTouchStart(e) {
-                if (e.touches.length === 1) {
-                    const touch = e.touches[0];
-                    startDrawing(touch);
-                }
-            }
-            
-            function handleTouchMove(e) {
-                if (e.touches.length === 1) {
-                    const touch = e.touches[0];
-                    draw(touch);
-                }
-            }
-            
-            function getCoordinates(e) {
-                const rect = canvas.getBoundingClientRect();
-                let clientX, clientY;
-                
-                if (e.type.includes('touch')) {
-                    clientX = e.touches[0].clientX;
-                    clientY = e.touches[0].clientY;
-                } else {
-                    clientX = e.clientX;
-                    clientY = e.clientY;
-                }
-                
-                return [
-                    clientX - rect.left,
-                    clientY - rect.top
-                ];
-            }
-        }
-        
-        function clearSignature(canvasId) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-        }
-        
-        function saveSignature(canvasId) {
-            showMessage('Signature saved successfully', 'success');
-        }
-        
-        function getSignatureData(canvasId) {
-            const canvas = document.getElementById(canvasId);
-            return canvas.toDataURL('image/png');
-        }
-
-        // Form submission
+        // Form submission - FIXED FOR GITHUB PAGES
         function submitForm() {
             showLoading(true);
             
@@ -2020,7 +2226,7 @@
             formData.images = [];
             for (let i = 1; i <= 3; i++) {
                 const preview = document.getElementById(`preview${i}`);
-                if (preview.src && preview.src !== '') {
+                if (preview.src && preview.src !== '' && !preview.src.includes('preview')) {
                     formData.images.push(preview.src);
                 }
             }
@@ -2032,283 +2238,316 @@
             showMessage('Report submitted successfully!', 'success');
             
             // Reset form
-            resetForm();
-            
-            showLoading(false);
-            
-            // Switch to admin mode to view the new report
             setTimeout(() => {
+                resetForm();
+                showLoading(false);
+                
+                // Switch to admin mode to view the new report
                 if (currentUser.role === 'admin') {
-                    switchMode('admin');
+                    setTimeout(() => switchMode('admin'), 500);
                 }
-            }, 2000);
+            }, 1000);
         }
         
         function saveReport(report) {
-            // Get existing reports or initialize empty array
-            let reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-            
-            // Add new report
-            reports.push(report);
-            
-            // Save back to localStorage
-            localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
-            
-            // Update dashboard stats
-            updateDashboardStats();
+            try {
+                // Get existing reports or initialize empty array
+                let reports = [];
+                const storedReports = localStorage.getItem('gkEnergyReports');
+                if (storedReports) {
+                    reports = JSON.parse(storedReports);
+                }
+                
+                // Add new report
+                reports.push(report);
+                
+                // Save back to localStorage
+                localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
+                
+                // Update dashboard stats
+                updateDashboardStats();
+                
+                return true;
+            } catch (e) {
+                console.error('Error saving report:', e);
+                showMessage('Error saving report. Please try again.', 'error');
+                return false;
+            }
         }
         
         function loadReports() {
-            const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-            const tableBody = document.getElementById('reportsTableBody');
-            const searchTerm = document.getElementById('searchInput').value.toLowerCase();
-            const dateFilter = document.getElementById('dateFilter').value;
-            const statusFilter = document.getElementById('statusFilter').value;
-            const projectFilter = document.getElementById('projectFilter').value;
-            
-            // Clear table
-            tableBody.innerHTML = '';
-            
-            // Filter reports
-            const filteredReports = reports.filter(report => {
-                const matchesSearch = !searchTerm || 
-                    report.farmerName.toLowerCase().includes(searchTerm) ||
-                    report.phone.includes(searchTerm) ||
-                    report.reportId.toLowerCase().includes(searchTerm);
+            try {
+                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                const tableBody = document.getElementById('reportsTableBody');
+                const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+                const dateFilter = document.getElementById('dateFilter').value;
+                const statusFilter = document.getElementById('statusFilter').value;
+                const projectFilter = document.getElementById('projectFilter').value;
                 
-                const matchesDate = !dateFilter || report.reportDate === dateFilter;
-                const matchesStatus = !statusFilter || report.status === statusFilter;
+                // Clear table
+                tableBody.innerHTML = '';
                 
-                // Check if report contains the selected project
-                const matchesProject = !projectFilter || 
-                    (report.projects && report.projects.includes(projectFilter));
+                // Filter reports
+                const filteredReports = reports.filter(report => {
+                    const matchesSearch = !searchTerm || 
+                        (report.farmerName && report.farmerName.toLowerCase().includes(searchTerm)) ||
+                        (report.phone && report.phone.includes(searchTerm)) ||
+                        (report.reportId && report.reportId.toLowerCase().includes(searchTerm));
+                    
+                    const matchesDate = !dateFilter || report.reportDate === dateFilter;
+                    const matchesStatus = !statusFilter || report.status === statusFilter;
+                    
+                    // Check if report contains the selected project
+                    const matchesProject = !projectFilter || 
+                        (report.projects && report.projects.includes(projectFilter));
+                    
+                    return matchesSearch && matchesDate && matchesStatus && matchesProject;
+                });
                 
-                return matchesSearch && matchesDate && matchesStatus && matchesProject;
-            });
-            
-            // Sort by date (newest first)
-            filteredReports.sort((a, b) => new Date(b.submissionDate) - new Date(a.submissionDate));
-            
-            // Populate table
-            filteredReports.forEach((report, index) => {
-                const row = document.createElement('tr');
+                // Sort by date (newest first)
+                filteredReports.sort((a, b) => new Date(b.submissionDate) - new Date(a.submissionDate));
                 
-                // Get first few projects for display
-                const projects = report.projects || [];
-                const displayProjects = projects.length > 0 
-                    ? (projects.length > 2 ? projects.slice(0, 2).join(', ') + ' +' + (projects.length - 2) : projects.join(', '))
-                    : 'N/A';
-                
-                row.innerHTML = `
-                    <td>${report.reportId}</td>
-                    <td>${formatDate(report.reportDate)}</td>
-                    <td>${report.farmerName}</td>
-                    <td>${report.phone}</td>
-                    <td>${report.village}</td>
-                    <td title="${projects.join(', ')}">${displayProjects}</td>
-                    <td><span style="padding: 4px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></td>
-                    <td>${report.engineerName}</td>
-                    <td>
-                        <button class="action-btn view-btn" onclick="viewReport(${index})">
-                            <i class="fas fa-eye"></i> View
-                        </button>
-                        <button class="action-btn edit-btn" onclick="editReport(${index})">
-                            <i class="fas fa-edit"></i> Edit
-                        </button>
-                        <button class="action-btn delete-btn" onclick="deleteReport(${index})">
-                            <i class="fas fa-trash"></i> Delete
-                        </button>
-                    </td>
-                `;
-                
-                tableBody.appendChild(row);
-            });
-            
-            if (filteredReports.length === 0) {
-                tableBody.innerHTML = `
-                    <tr>
-                        <td colspan="9" style="text-align: center; padding: 40px;">
-                            <i class="fas fa-inbox" style="font-size: 3rem; color: #ddd; margin-bottom: 10px;"></i>
-                            <p>No reports found</p>
+                // Populate table
+                filteredReports.forEach((report, index) => {
+                    const row = document.createElement('tr');
+                    
+                    // Get first few projects for display
+                    const projects = report.projects || [];
+                    const displayProjects = projects.length > 0 
+                        ? (projects.length > 2 ? projects.slice(0, 2).join(', ') + ' +' + (projects.length - 2) : projects.join(', '))
+                        : 'N/A';
+                    
+                    row.innerHTML = `
+                        <td>${report.reportId || 'N/A'}</td>
+                        <td>${formatDate(report.reportDate)}</td>
+                        <td>${report.farmerName || 'N/A'}</td>
+                        <td>${report.phone || 'N/A'}</td>
+                        <td>${report.village || 'N/A'}</td>
+                        <td title="${projects.join(', ')}">${displayProjects}</td>
+                        <td><span style="padding: 4px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></td>
+                        <td>${report.engineerName || 'N/A'}</td>
+                        <td>
+                            <button class="action-btn view-btn" onclick="viewReport(${index})">
+                                <i class="fas fa-eye"></i> View
+                            </button>
+                            <button class="action-btn delete-btn" onclick="deleteReport(${index})">
+                                <i class="fas fa-trash"></i> Delete
+                            </button>
                         </td>
-                    </tr>
-                `;
+                    `;
+                    
+                    tableBody.appendChild(row);
+                });
+                
+                if (filteredReports.length === 0) {
+                    tableBody.innerHTML = `
+                        <tr>
+                            <td colspan="9" style="text-align: center; padding: 40px;">
+                                <i class="fas fa-inbox" style="font-size: 3rem; color: #ddd; margin-bottom: 10px;"></i>
+                                <p>No reports found</p>
+                            </td>
+                        </tr>
+                    `;
+                }
+            } catch (e) {
+                console.error('Error loading reports:', e);
+                showMessage('Error loading reports', 'error');
             }
         }
         
         function updateDashboardStats() {
-            const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-            
-            // Calculate stats
-            const totalReports = reports.length;
-            const resolvedReports = reports.filter(r => r.status === 'Resolved').length;
-            const unresolvedReports = totalReports - resolvedReports;
-            
-            // Get unique farmers
-            const uniqueFarmers = new Set(reports.map(r => r.phone)).size;
-            
-            // Update display
-            document.getElementById('totalReports').textContent = totalReports;
-            document.getElementById('resolvedReports').textContent = resolvedReports;
-            document.getElementById('unresolvedReports').textContent = unresolvedReports;
-            document.getElementById('uniqueFarmers').textContent = uniqueFarmers;
+            try {
+                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                
+                // Calculate stats
+                const totalReports = reports.length;
+                const resolvedReports = reports.filter(r => r.status === 'Resolved').length;
+                const unresolvedReports = totalReports - resolvedReports;
+                
+                // Get unique farmers
+                const uniqueFarmers = new Set();
+                reports.forEach(r => {
+                    if (r.phone) uniqueFarmers.add(r.phone);
+                });
+                
+                // Update display
+                document.getElementById('totalReports').textContent = totalReports;
+                document.getElementById('resolvedReports').textContent = resolvedReports;
+                document.getElementById('unresolvedReports').textContent = unresolvedReports;
+                document.getElementById('uniqueFarmers').textContent = uniqueFarmers.size;
+            } catch (e) {
+                console.error('Error updating dashboard:', e);
+            }
         }
         
         function viewReport(index) {
-            const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-            const report = reports[index];
-            
-            if (!report) {
-                showMessage('Report not found', 'error');
-                return;
-            }
-            
-            // Build modal content
-            let modalContent = `
-                <div class="report-details">
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Report Information</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                            <div><strong>Report ID:</strong><br>${report.reportId}</div>
-                            <div><strong>Report Date:</strong><br>${formatDate(report.reportDate)}</div>
-                            <div><strong>Engineer:</strong><br>${report.engineerName}</div>
-                            <div><strong>Submission Date:</strong><br>${formatDateTime(report.submissionDate)}</div>
+            try {
+                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                const report = reports[index];
+                
+                if (!report) {
+                    showMessage('Report not found', 'error');
+                    return;
+                }
+                
+                // Build modal content
+                let modalContent = `
+                    <div class="report-details">
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-info-circle"></i> Report Information</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                                <div><strong>Report ID:</strong><br>${report.reportId || 'N/A'}</div>
+                                <div><strong>Report Date:</strong><br>${formatDate(report.reportDate)}</div>
+                                <div><strong>Engineer:</strong><br>${report.engineerName || 'N/A'}</div>
+                                <div><strong>Submission Date:</strong><br>${formatDateTime(report.submissionDate)}</div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-user-farmer"></i> Farmer Details</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                            <div><strong>Name:</strong><br>${report.farmerName}</div>
-                            <div><strong>Phone:</strong><br>${report.phone}</div>
-                            <div><strong>Location:</strong><br>${report.village}, ${report.district}, ${report.state}</div>
-                            <div><strong>Complaint Status:</strong><br><span style="padding: 2px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></div>
+                        
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-user-farmer"></i> Farmer Details</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                                <div><strong>Name:</strong><br>${report.farmerName || 'N/A'}</div>
+                                <div><strong>Phone:</strong><br>${report.phone || 'N/A'}</div>
+                                <div><strong>Location:</strong><br>${report.village || 'N/A'}, ${report.district || 'N/A'}, ${report.state || 'N/A'}</div>
+                                <div><strong>Complaint Status:</strong><br><span style="padding: 2px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Project Details</h3>
-                        <p><strong>Projects:</strong> ${report.projects ? report.projects.join(', ') : 'N/A'}</p>
-                        <p><strong>Product Type:</strong> ${report.productType || 'N/A'}</p>
-                        <p><strong>Complaint Details:</strong> ${report.complaintDetails || 'N/A'}</p>
-                    </div>
-            `;
-            
-            // Add product details if available
-            if (report.productType) {
-                modalContent += `
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-industry"></i> Product Details</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                            ${report.pumpTypes ? `<div><strong>Pump Type:</strong><br>${report.pumpTypes.join(', ')}</div>` : ''}
-                            ${report.capacities ? `<div><strong>Capacity:</strong><br>${report.capacities.join(', ')}</div>` : ''}
-                            ${report.supplyType ? `<div><strong>Supply Type:</strong><br>${report.supplyType}</div>` : ''}
-                            ${report.skuType ? `<div><strong>SKU Type:</strong><br>${report.skuType}</div>` : ''}
-                            ${report.controllerMakes ? `<div><strong>Controller Make:</strong><br>${report.controllerMakes.join(', ')}</div>` : ''}
-                            ${report.controllerId ? `<div><strong>Controller ID:</strong><br>${report.controllerId}</div>` : ''}
-                            ${report.motorMakes ? `<div><strong>Motor Make:</strong><br>${report.motorMakes.join(', ')}</div>` : ''}
-                            ${report.motorSerial ? `<div><strong>Motor Serial:</strong><br>${report.motorSerial}</div>` : ''}
-                            ${report.pumpSerial ? `<div><strong>Pump Serial:</strong><br>${report.pumpSerial}</div>` : ''}
-                            ${report.pumpModels ? `<div><strong>Pump Models:</strong><br>${report.pumpModels.join(', ')}</div>` : ''}
+                        
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Project Details</h3>
+                            <p><strong>Projects:</strong> ${report.projects ? report.projects.join(', ') : 'N/A'}</p>
+                            <p><strong>Product Type:</strong> ${report.productType || 'N/A'}</p>
+                            <p><strong>Complaint Details:</strong> ${report.complaintDetails || 'N/A'}</p>
                         </div>
-                    </div>
-                `;
-            }
-            
-            // Add images if available
-            if (report.images && report.images.length > 0) {
-                modalContent += `
-                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                        <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-images"></i> Uploaded Images</h3>
-                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
                 `;
                 
-                report.images.forEach((imgSrc, i) => {
+                // Add product details if available
+                if (report.productType) {
                     modalContent += `
-                        <div>
-                            <img src="${imgSrc}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 5px;">
-                            <small>Image ${i + 1}</small>
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-industry"></i> Product Details</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                                ${report.pumpTypes ? `<div><strong>Pump Type:</strong><br>${report.pumpTypes.join(', ')}</div>` : ''}
+                                ${report.capacities ? `<div><strong>Capacity:</strong><br>${report.capacities.join(', ')}</div>` : ''}
+                                ${report.supplyType ? `<div><strong>Supply Type:</strong><br>${report.supplyType}</div>` : ''}
+                                ${report.skuType ? `<div><strong>SKU Type:</strong><br>${report.skuType}</div>` : ''}
+                                ${report.controllerMakes ? `<div><strong>Controller Make:</strong><br>${report.controllerMakes.join(', ')}</div>` : ''}
+                                ${report.controllerId ? `<div><strong>Controller ID:</strong><br>${report.controllerId}</div>` : ''}
+                                ${report.motorMakes ? `<div><strong>Motor Make:</strong><br>${report.motorMakes.join(', ')}</div>` : ''}
+                                ${report.motorSerial ? `<div><strong>Motor Serial:</strong><br>${report.motorSerial}</div>` : ''}
+                                ${report.pumpSerial ? `<div><strong>Pump Serial:</strong><br>${report.pumpSerial}</div>` : ''}
+                                ${report.pumpModels ? `<div><strong>Pump Models:</strong><br>${report.pumpModels.join(', ')}</div>` : ''}
+                            </div>
                         </div>
                     `;
-                });
+                }
                 
-                modalContent += `</div></div>`;
-            }
-            
-            // Add signatures if available
-            modalContent += `
-                <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                    <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-signature"></i> Signatures</h3>
-                    <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
-                        <div>
-                            <p><strong>Farmer's Signature:</strong></p>
-                            ${report.farmerSignature ? `<img src="${report.farmerSignature}" style="width: 100%; max-width: 300px; border: 1px solid #ddd; background: white;">` : '<p>No signature</p>'}
-                        </div>
-                        <div>
-                            <p><strong>Engineer's Signature:</strong></p>
-                            ${report.engineerSignature ? `<img src="${report.engineerSignature}" style="width: 100%; max-width: 300px; border: 1px solid #ddd; background: white;">` : '<p>No signature</p>'}
+                // Add images if available
+                if (report.images && report.images.length > 0) {
+                    modalContent += `
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-images"></i> Uploaded Images</h3>
+                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
+                    `;
+                    
+                    report.images.forEach((imgSrc, i) => {
+                        if (imgSrc && imgSrc.startsWith('data:image')) {
+                            modalContent += `
+                                <div>
+                                    <img src="${imgSrc}" style="width: 100%; height: 150px; object-fit: cover; border-radius: 5px; margin-bottom: 5px;">
+                                    <small>Image ${i + 1}</small>
+                                </div>
+                            `;
+                        }
+                    });
+                    
+                    modalContent += `</div></div>`;
+                }
+                
+                // Add signatures if available
+                modalContent += `
+                    <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                        <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-signature"></i> Signatures</h3>
+                        <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 20px;">
+                            <div>
+                                <p><strong>Farmer's Signature:</strong></p>
+                                ${report.farmerSignature ? `<img src="${report.farmerSignature}" style="width: 100%; max-width: 300px; border: 1px solid #ddd; background: white;">` : '<p>No signature</p>'}
+                            </div>
+                            <div>
+                                <p><strong>Engineer's Signature:</strong></p>
+                                ${report.engineerSignature ? `<img src="${report.engineerSignature}" style="width: 100%; max-width: 300px; border: 1px solid #ddd; background: white;">` : '<p>No signature</p>'}
+                            </div>
                         </div>
                     </div>
-                </div>
-            `;
-            
-            modalContent += `</div>`;
-            
-            // Set modal content and show
-            document.getElementById('modalBody').innerHTML = modalContent;
-            document.getElementById('reportModal').style.display = 'block';
-        }
-        
-        function editReport(index) {
-            showMessage('Edit functionality coming soon!', 'info');
+                `;
+                
+                modalContent += `</div>`;
+                
+                // Set modal content and show
+                document.getElementById('modalBody').innerHTML = modalContent;
+                document.getElementById('reportModal').style.display = 'block';
+            } catch (e) {
+                console.error('Error viewing report:', e);
+                showMessage('Error loading report details', 'error');
+            }
         }
         
         function deleteReport(index) {
             if (confirm('Are you sure you want to delete this report? This action cannot be undone.')) {
-                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-                reports.splice(index, 1);
-                localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
-                loadReports();
-                updateDashboardStats();
-                showMessage('Report deleted successfully', 'success');
+                try {
+                    const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                    reports.splice(index, 1);
+                    localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
+                    loadReports();
+                    updateDashboardStats();
+                    showMessage('Report deleted successfully', 'success');
+                } catch (e) {
+                    console.error('Error deleting report:', e);
+                    showMessage('Error deleting report', 'error');
+                }
             }
         }
         
         function exportToExcel() {
-            const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-            
-            if (reports.length === 0) {
-                showMessage('No reports to export', 'error');
-                return;
+            try {
+                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                
+                if (reports.length === 0) {
+                    showMessage('No reports to export', 'error');
+                    return;
+                }
+                
+                // Create CSV content
+                let csv = 'Report ID,Date,Farmer Name,Phone,Village,District,State,Projects,Status,Engineer,Complaint Details,Submission Date\n';
+                
+                reports.forEach(report => {
+                    const projects = report.projects ? report.projects.join('; ') : '';
+                    const complaintDetails = (report.complaintDetails || '').replace(/"/g, '""');
+                    csv += `"${report.reportId || ''}","${formatDate(report.reportDate)}","${report.farmerName || ''}","${report.phone || ''}","${report.village || ''}","${report.district || ''}","${report.state || ''}","${projects}","${report.status || ''}","${report.engineerName || ''}","${complaintDetails}","${formatDateTime(report.submissionDate)}"\n`;
+                });
+                
+                // Create download link
+                const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+                const url = URL.createObjectURL(blob);
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', `GK_Energy_Reports_${new Date().toISOString().slice(0, 10)}.csv`);
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                
+                showMessage('Export completed successfully', 'success');
+            } catch (e) {
+                console.error('Error exporting data:', e);
+                showMessage('Error exporting data', 'error');
             }
-            
-            // Create CSV content
-            let csv = 'Report ID,Date,Farmer Name,Phone,Village,District,State,Projects,Status,Engineer,Complaint Details,Submission Date\n';
-            
-            reports.forEach(report => {
-                const projects = report.projects ? report.projects.join('; ') : '';
-                csv += `"${report.reportId}","${formatDate(report.reportDate)}","${report.farmerName}","${report.phone}","${report.village}","${report.district}","${report.state}","${projects}","${report.status}","${report.engineerName}","${(report.complaintDetails || '').replace(/"/g, '""')}","${formatDateTime(report.submissionDate)}"\n`;
-            });
-            
-            // Create download link
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = window.URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `GK_Energy_Reports_${new Date().toISOString().slice(0, 10)}.csv`;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            window.URL.revokeObjectURL(url);
-            
-            showMessage('Export completed successfully', 'success');
         }
         
         function resetForm() {
             if (confirm('Are you sure you want to reset the form? All unsaved data will be lost.')) {
                 document.getElementById('siteVisitForm').reset();
-                clearSignature('farmerSignature');
-                clearSignature('engineerSignature');
+                clearSignature('farmerSignature', 'farmerPlaceholder');
+                clearSignature('engineerSignature', 'engineerPlaceholder');
                 
                 // Clear image previews
                 for (let i = 1; i <= 3; i++) {
@@ -2364,14 +2603,22 @@
         
         function formatDate(dateString) {
             if (!dateString) return 'N/A';
-            const date = new Date(dateString);
-            return date.toLocaleDateString('en-IN');
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-IN');
+            } catch (e) {
+                return dateString;
+            }
         }
         
         function formatDateTime(dateTimeString) {
             if (!dateTimeString) return 'N/A';
-            const date = new Date(dateTimeString);
-            return date.toLocaleString('en-IN');
+            try {
+                const date = new Date(dateTimeString);
+                return date.toLocaleString('en-IN');
+            } catch (e) {
+                return dateTimeString;
+            }
         }
         
         // Close modal when clicking outside
@@ -2382,11 +2629,10 @@
             }
         };
         
-        // Prevent form submission on Enter key
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter' && e.target.type !== 'textarea') {
-                e.preventDefault();
-            }
+        // Prevent default form submission
+        document.getElementById('siteVisitForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            return false;
         });
     </script>
 </body>
