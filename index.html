@@ -6,6 +6,7 @@
     <title>GK Energy - Site Visit Report System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* All your CSS styles here - they remain the same */
         :root {
             --primary-color: #2c6e49;
             --primary-dark: #1e4d34;
@@ -1511,8 +1512,12 @@
             // Initialize image upload
             initImageUpload();
             
-            // Debug: Check if localStorage is working
-            console.log('LocalStorage available:', typeof localStorage !== 'undefined');
+            // Prevent form submission on Enter key
+            document.getElementById('siteVisitForm').addEventListener('keydown', function(e) {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                }
+            });
         });
 
         // Enhanced signature canvas functionality
@@ -1784,9 +1789,9 @@
             }
         }
 
-        // Main submit function - SIMPLIFIED AND DEBUGGED
+        // Main submit function - COMPLETELY FIXED VERSION
         function handleSubmit() {
-            console.log('Submit button clicked');
+            console.log('Submit button clicked - Starting form validation');
             
             // Validate required fields
             const requiredFields = ['engineerName', 'farmerName', 'phone', 'state', 'district', 'village'];
@@ -1794,26 +1799,60 @@
             
             requiredFields.forEach(fieldId => {
                 const field = document.getElementById(fieldId);
-                if (!field.value.trim()) {
+                if (!field || !field.value.trim()) {
                     isValid = false;
-                    field.style.borderColor = '#e74c3c';
+                    if (field) {
+                        field.style.borderColor = '#e74c3c';
+                        field.style.boxShadow = '0 0 0 2px rgba(231, 76, 60, 0.2)';
+                    }
                 } else {
-                    field.style.borderColor = '#ddd';
+                    if (field) {
+                        field.style.borderColor = '#ddd';
+                        field.style.boxShadow = 'none';
+                    }
                 }
             });
             
             // Check if at least one project is selected
-            const projects = Array.from(document.querySelectorAll('input[name="project"]:checked')).map(cb => cb.value);
+            const projectCheckboxes = document.querySelectorAll('input[name="project"]:checked');
+            const projects = Array.from(projectCheckboxes).map(cb => cb.value);
             if (projects.length === 0) {
                 showMessage('Please select at least one project', 'error');
+                // Highlight project section
+                const projectSection = document.querySelector('input[name="project"]').closest('.project-grid');
+                if (projectSection) {
+                    projectSection.style.borderColor = '#e74c3c';
+                    projectSection.style.boxShadow = '0 0 0 2px rgba(231, 76, 60, 0.2)';
+                }
                 return;
+            } else {
+                // Reset project section style
+                const projectSection = document.querySelector('input[name="project"]').closest('.project-grid');
+                if (projectSection) {
+                    projectSection.style.borderColor = '';
+                    projectSection.style.boxShadow = '';
+                }
             }
             
             // Check if complaint status is selected
             const statusSelected = document.querySelector('input[name="status"]:checked');
             if (!statusSelected) {
                 showMessage('Please select complaint status', 'error');
+                // Highlight status section
+                const statusSection = document.querySelector('input[name="status"]').closest('.form-group');
+                if (statusSection) {
+                    statusSection.style.border = '1px solid #e74c3c';
+                    statusSection.style.borderRadius = '4px';
+                    statusSection.style.padding = '5px';
+                }
                 return;
+            } else {
+                // Reset status section style
+                const statusSection = document.querySelector('input[name="status"]').closest('.form-group');
+                if (statusSection) {
+                    statusSection.style.border = '';
+                    statusSection.style.padding = '';
+                }
             }
             
             if (!isValid) {
@@ -1824,7 +1863,7 @@
             // Show loading
             showLoading(true);
             
-            // Collect basic form data
+            // Collect form data
             const formData = {
                 reportId: document.getElementById('reportId').value,
                 reportDate: document.getElementById('reportDate').value,
@@ -1837,28 +1876,37 @@
                 projects: projects,
                 submissionDate: new Date().toISOString(),
                 status: statusSelected.value,
-                submittedBy: currentUser.username
+                submittedBy: currentUser.username,
+                submittedByName: currentUser.name
             };
             
-            // Add other optional fields
-            const optionalFields = ['complaintNumber', 'complaintDate', 'visitDate', 'complaintDetails', 
-                                  'controllerId', 'motorSerial', 'pumpSerial', 'oldPCB', 'newPCB',
-                                  'ascName', 'submitDate', 'faultDetails', 'beneficiaryComment', 
-                                  'engineerRemarks', 'panelMC4', 'controllerMC4', 'junctionBox', 
-                                  'totalPanel', 'resistanceRY', 'resistanceRB', 'resistanceYB',
-                                  'currentR', 'currentY', 'currentB', 'voltageRY', 'voltageRB', 
-                                  'voltageYB', 'fullLoadVDC', 'noLoadVDC', 'frequency', 'pvCurrent',
-                                  'motorCurrent', 'waterDischarge', 'totalHead', 'waterLevel', 
-                                  'pumpDepth', 'pipelineLength', 'pipeSize', 'pipelineElevation'];
+            // Add other fields if they exist
+            const fieldsToAdd = [
+                'complaintNumber', 'complaintDate', 'visitDate', 'complaintDetails',
+                'controllerId', 'motorSerial', 'pumpSerial', 'oldPCB', 'newPCB',
+                'ascName', 'submitDate', 'faultDetails', 'beneficiaryComment',
+                'engineerRemarks', 'panelMC4', 'controllerMC4', 'junctionBox',
+                'totalPanel', 'resistanceRY', 'resistanceRB', 'resistanceYB',
+                'currentR', 'currentY', 'currentB', 'voltageRY', 'voltageRB',
+                'voltageYB', 'fullLoadVDC', 'noLoadVDC', 'frequency', 'pvCurrent',
+                'motorCurrent', 'waterDischarge', 'totalHead', 'waterLevel',
+                'pumpDepth', 'pipelineLength', 'pipeSize', 'pipelineElevation'
+            ];
             
-            optionalFields.forEach(field => {
+            fieldsToAdd.forEach(field => {
                 const element = document.getElementById(field);
-                if (element && element.value) {
-                    formData[field] = element.value;
+                if (element) {
+                    if (element.type === 'number') {
+                        formData[field] = element.value !== '' ? parseFloat(element.value) : null;
+                    } else if (element.type === 'checkbox') {
+                        formData[field] = element.checked;
+                    } else {
+                        formData[field] = element.value || '';
+                    }
                 }
             });
             
-            // Add checkboxes
+            // Add checkboxes (individual checkboxes)
             const checkboxes = ['toggleSwitch', 'dcCable', 'mcb', 'display'];
             checkboxes.forEach(id => {
                 const checkbox = document.getElementById(id);
@@ -1867,58 +1915,76 @@
                 }
             });
             
-            // Add radio and checkbox groups
-            const productType = document.querySelector('input[name="productType"]:checked');
-            if (productType) formData.productType = productType.value;
+            // Add radio buttons
+            const radioGroups = {
+                'productType': document.querySelector('input[name="productType"]:checked'),
+                'supplyType': document.querySelector('input[name="supplyType"]:checked'),
+                'skuType': document.querySelector('input[name="skuType"]:checked'),
+                'submittedBy': document.querySelector('input[name="submittedBy"]:checked')
+            };
             
-            const supplyType = document.querySelector('input[name="supplyType"]:checked');
-            if (supplyType) formData.supplyType = supplyType.value;
+            Object.keys(radioGroups).forEach(key => {
+                if (radioGroups[key]) {
+                    formData[key] = radioGroups[key].value;
+                }
+            });
             
-            const skuType = document.querySelector('input[name="skuType"]:checked');
-            if (skuType) formData.skuType = skuType.value;
-            
-            const submittedBy = document.querySelector('input[name="submittedBy"]:checked');
-            if (submittedBy) formData.submittedTo = submittedBy.value;
-            
-            // Add array fields
-            const arrayFields = ['pumpType', 'capacity', 'controllerMake', 'motorMake', 'pump', 'materialSubmitted'];
-            arrayFields.forEach(name => {
-                const elements = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
-                if (elements.length > 0) {
-                    formData[name] = elements;
+            // Add array fields (checkbox groups)
+            const checkboxGroups = ['pumpType', 'capacity', 'controllerMake', 'motorMake', 'pump', 'materialSubmitted'];
+            checkboxGroups.forEach(name => {
+                const checkboxes = document.querySelectorAll(`input[name="${name}"]:checked`);
+                if (checkboxes.length > 0) {
+                    formData[name] = Array.from(checkboxes).map(cb => cb.value);
                 }
             });
             
             // Add signatures
-            formData.farmerSignature = getSignatureData('farmerSignature');
-            formData.engineerSignature = getSignatureData('engineerSignature');
+            const farmerSig = getSignatureData('farmerSignature');
+            const engineerSig = getSignatureData('engineerSignature');
+            
+            if (farmerSig && farmerSig.length > 100) { // Check if signature exists
+                formData.farmerSignature = farmerSig;
+            }
+            if (engineerSig && engineerSig.length > 100) { // Check if signature exists
+                formData.engineerSignature = engineerSig;
+            }
             
             // Add images
             formData.images = [];
             for (let i = 1; i <= 3; i++) {
                 const preview = document.getElementById(`preview${i}`);
-                if (preview.src && preview.src.startsWith('data:image')) {
+                if (preview && preview.src && preview.src.startsWith('data:image')) {
                     formData.images.push(preview.src);
                 }
             }
             
-            console.log('Form data collected:', formData);
+            console.log('Form data collected successfully:', formData);
             
             // Save to localStorage
             try {
                 let reports = [];
                 const stored = localStorage.getItem('gkEnergyReports');
                 if (stored) {
-                    reports = JSON.parse(stored);
+                    try {
+                        reports = JSON.parse(stored);
+                    } catch (parseError) {
+                        console.error('Error parsing stored reports:', parseError);
+                        reports = [];
+                    }
+                }
+                
+                // Ensure reports is an array
+                if (!Array.isArray(reports)) {
+                    reports = [];
                 }
                 
                 reports.push(formData);
                 localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
                 
-                console.log('Report saved successfully');
+                console.log('Report saved successfully to localStorage');
                 
                 // Show success message
-                showMessage('Report submitted successfully! Report ID: ' + formData.reportId, 'success');
+                showMessage(`Report submitted successfully! Report ID: ${formData.reportId}`, 'success');
                 
                 // Reset form after delay
                 setTimeout(() => {
@@ -1933,14 +1999,25 @@
                 
             } catch (error) {
                 console.error('Error saving report:', error);
-                showMessage('Error saving report: ' + error.message, 'error');
+                showMessage(`Error saving report: ${error.message}`, 'error');
                 showLoading(false);
             }
         }
         
         function loadReports() {
             try {
-                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                const stored = localStorage.getItem('gkEnergyReports');
+                let reports = [];
+                
+                if (stored) {
+                    try {
+                        reports = JSON.parse(stored);
+                    } catch (parseError) {
+                        console.error('Error parsing reports:', parseError);
+                        reports = [];
+                    }
+                }
+                
                 const tableBody = document.getElementById('reportsTableBody');
                 const searchTerm = document.getElementById('searchInput').value.toLowerCase();
                 const dateFilter = document.getElementById('dateFilter').value;
@@ -1949,6 +2026,11 @@
                 
                 // Clear table
                 tableBody.innerHTML = '';
+                
+                // Ensure reports is an array
+                if (!Array.isArray(reports)) {
+                    reports = [];
+                }
                 
                 // Filter reports
                 const filteredReports = reports.filter(report => {
@@ -1967,39 +2049,13 @@
                 });
                 
                 // Sort by date (newest first)
-                filteredReports.sort((a, b) => new Date(b.submissionDate) - new Date(a.submissionDate));
-                
-                // Populate table
-                filteredReports.forEach((report, index) => {
-                    const row = document.createElement('tr');
-                    
-                    const projects = report.projects || [];
-                    const displayProjects = projects.length > 0 
-                        ? (projects.length > 2 ? projects.slice(0, 2).join(', ') + ' +' + (projects.length - 2) : projects.join(', '))
-                        : 'N/A';
-                    
-                    row.innerHTML = `
-                        <td>${report.reportId || 'N/A'}</td>
-                        <td>${formatDate(report.reportDate)}</td>
-                        <td>${report.farmerName || 'N/A'}</td>
-                        <td>${report.phone || 'N/A'}</td>
-                        <td>${report.village || 'N/A'}</td>
-                        <td title="${projects.join(', ')}">${displayProjects}</td>
-                        <td><span style="padding: 4px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></td>
-                        <td>${report.engineerName || 'N/A'}</td>
-                        <td>
-                            <button class="action-btn view-btn" onclick="viewReport(${index})">
-                                <i class="fas fa-eye"></i> View
-                            </button>
-                            <button class="action-btn delete-btn" onclick="deleteReport(${index})">
-                                <i class="fas fa-trash"></i> Delete
-                            </button>
-                        </td>
-                    `;
-                    
-                    tableBody.appendChild(row);
+                filteredReports.sort((a, b) => {
+                    const dateA = new Date(a.submissionDate || a.reportDate || 0);
+                    const dateB = new Date(b.submissionDate || b.reportDate || 0);
+                    return dateB - dateA;
                 });
                 
+                // Populate table
                 if (filteredReports.length === 0) {
                     tableBody.innerHTML = `
                         <tr>
@@ -2009,6 +2065,36 @@
                             </td>
                         </tr>
                     `;
+                } else {
+                    filteredReports.forEach((report, index) => {
+                        const row = document.createElement('tr');
+                        
+                        const projects = report.projects || [];
+                        const displayProjects = projects.length > 0 
+                            ? (projects.length > 2 ? projects.slice(0, 2).join(', ') + ' +' + (projects.length - 2) : projects.join(', '))
+                            : 'N/A';
+                        
+                        row.innerHTML = `
+                            <td>${report.reportId || 'N/A'}</td>
+                            <td>${formatDate(report.reportDate)}</td>
+                            <td>${report.farmerName || 'N/A'}</td>
+                            <td>${report.phone || 'N/A'}</td>
+                            <td>${report.village || 'N/A'}</td>
+                            <td title="${projects.join(', ')}">${displayProjects}</td>
+                            <td><span style="padding: 4px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></td>
+                            <td>${report.engineerName || report.submittedByName || 'N/A'}</td>
+                            <td>
+                                <button class="action-btn view-btn" onclick="viewReport(${index})">
+                                    <i class="fas fa-eye"></i> View
+                                </button>
+                                <button class="action-btn delete-btn" onclick="deleteReport(${index})">
+                                    <i class="fas fa-trash"></i> Delete
+                                </button>
+                            </td>
+                        `;
+                        
+                        tableBody.appendChild(row);
+                    });
                 }
             } catch (e) {
                 console.error('Error loading reports:', e);
@@ -2018,7 +2104,21 @@
         
         function updateDashboardStats() {
             try {
-                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                const stored = localStorage.getItem('gkEnergyReports');
+                let reports = [];
+                
+                if (stored) {
+                    try {
+                        reports = JSON.parse(stored);
+                    } catch (parseError) {
+                        console.error('Error parsing reports:', parseError);
+                        reports = [];
+                    }
+                }
+                
+                if (!Array.isArray(reports)) {
+                    reports = [];
+                }
                 
                 const totalReports = reports.length;
                 const resolvedReports = reports.filter(r => r.status === 'Resolved').length;
@@ -2027,6 +2127,7 @@
                 const uniqueFarmers = new Set();
                 reports.forEach(r => {
                     if (r.phone) uniqueFarmers.add(r.phone);
+                    if (r.farmerName) uniqueFarmers.add(r.farmerName);
                 });
                 
                 document.getElementById('totalReports').textContent = totalReports;
@@ -2040,13 +2141,24 @@
         
         function viewReport(index) {
             try {
-                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
-                const report = reports[index];
+                const stored = localStorage.getItem('gkEnergyReports');
+                let reports = [];
                 
-                if (!report) {
+                if (stored) {
+                    try {
+                        reports = JSON.parse(stored);
+                    } catch (parseError) {
+                        console.error('Error parsing reports:', parseError);
+                        reports = [];
+                    }
+                }
+                
+                if (!Array.isArray(reports) || !reports[index]) {
                     showMessage('Report not found', 'error');
                     return;
                 }
+                
+                const report = reports[index];
                 
                 let modalContent = `
                     <div class="report-details">
@@ -2055,7 +2167,7 @@
                             <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
                                 <div><strong>Report ID:</strong><br>${report.reportId || 'N/A'}</div>
                                 <div><strong>Report Date:</strong><br>${formatDate(report.reportDate)}</div>
-                                <div><strong>Engineer:</strong><br>${report.engineerName || 'N/A'}</div>
+                                <div><strong>Engineer:</strong><br>${report.engineerName || report.submittedByName || 'N/A'}</div>
                                 <div><strong>Submission Date:</strong><br>${formatDateTime(report.submissionDate)}</div>
                             </div>
                         </div>
@@ -2070,6 +2182,16 @@
                             </div>
                         </div>
                 `;
+                
+                // Add Projects section
+                if (report.projects && report.projects.length > 0) {
+                    modalContent += `
+                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
+                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Projects</h3>
+                            <p><strong>Selected Projects:</strong> ${report.projects.join(', ')}</p>
+                        </div>
+                    `;
+                }
                 
                 if (report.images && report.images.length > 0) {
                     modalContent += `
@@ -2092,6 +2214,7 @@
                     modalContent += `</div></div>`;
                 }
                 
+                // Add signatures if they exist
                 modalContent += `
                     <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                         <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-signature"></i> Signatures</h3>
@@ -2121,13 +2244,29 @@
         function deleteReport(index) {
             if (confirm('Are you sure you want to delete this report?')) {
                 try {
-                    const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                    const stored = localStorage.getItem('gkEnergyReports');
+                    let reports = [];
+                    
+                    if (stored) {
+                        try {
+                            reports = JSON.parse(stored);
+                        } catch (parseError) {
+                            console.error('Error parsing reports:', parseError);
+                            reports = [];
+                        }
+                    }
+                    
+                    if (!Array.isArray(reports)) {
+                        reports = [];
+                    }
+                    
                     reports.splice(index, 1);
                     localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
                     loadReports();
                     updateDashboardStats();
                     showMessage('Report deleted successfully', 'success');
                 } catch (e) {
+                    console.error('Error deleting report:', e);
                     showMessage('Error deleting report', 'error');
                 }
             }
@@ -2135,7 +2274,21 @@
         
         function exportToExcel() {
             try {
-                const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
+                const stored = localStorage.getItem('gkEnergyReports');
+                let reports = [];
+                
+                if (stored) {
+                    try {
+                        reports = JSON.parse(stored);
+                    } catch (parseError) {
+                        console.error('Error parsing reports:', parseError);
+                        reports = [];
+                    }
+                }
+                
+                if (!Array.isArray(reports)) {
+                    reports = [];
+                }
                 
                 if (reports.length === 0) {
                     showMessage('No reports to export', 'error');
@@ -2146,7 +2299,7 @@
                 
                 reports.forEach(report => {
                     const projects = report.projects ? report.projects.join('; ') : '';
-                    csv += `"${report.reportId || ''}","${formatDate(report.reportDate)}","${report.farmerName || ''}","${report.phone || ''}","${report.village || ''}","${report.district || ''}","${report.state || ''}","${projects}","${report.status || ''}","${report.engineerName || ''}","${formatDateTime(report.submissionDate)}"\n`;
+                    csv += `"${report.reportId || ''}","${formatDate(report.reportDate)}","${report.farmerName || ''}","${report.phone || ''}","${report.village || ''}","${report.district || ''}","${report.state || ''}","${projects}","${report.status || ''}","${report.engineerName || report.submittedByName || ''}","${formatDateTime(report.submissionDate)}"\n`;
                 });
                 
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
@@ -2160,6 +2313,7 @@
                 
                 showMessage('Export completed successfully', 'success');
             } catch (e) {
+                console.error('Error exporting data:', e);
                 showMessage('Error exporting data', 'error');
             }
         }
@@ -2172,9 +2326,14 @@
                 
                 for (let i = 1; i <= 3; i++) {
                     const preview = document.getElementById(`preview${i}`);
-                    preview.style.display = 'none';
-                    preview.src = '';
-                    document.getElementById(`image${i}`).value = '';
+                    if (preview) {
+                        preview.style.display = 'none';
+                        preview.src = '';
+                    }
+                    const input = document.getElementById(`image${i}`);
+                    if (input) {
+                        input.value = '';
+                    }
                 }
                 
                 generateReportId();
@@ -2187,6 +2346,19 @@
                 
                 if (currentUser && currentUser.role === 'engineer') {
                     document.getElementById('engineerName').value = currentUser.name;
+                }
+                
+                // Reset all field styles
+                document.querySelectorAll('input, select, textarea').forEach(field => {
+                    field.style.borderColor = '';
+                    field.style.boxShadow = '';
+                });
+                
+                // Reset project section
+                const projectSection = document.querySelector('input[name="project"]')?.closest('.project-grid');
+                if (projectSection) {
+                    projectSection.style.borderColor = '';
+                    projectSection.style.boxShadow = '';
                 }
                 
                 showMessage('Form has been reset', 'success');
@@ -2204,6 +2376,8 @@
         // Utility functions
         function showMessage(message, type, elementId = 'statusMessage') {
             const statusDiv = document.getElementById(elementId);
+            if (!statusDiv) return;
+            
             statusDiv.textContent = message;
             statusDiv.className = `status-message status-${type}`;
             statusDiv.style.display = 'block';
@@ -2214,7 +2388,10 @@
         }
         
         function showLoading(show) {
-            document.getElementById('loadingSpinner').style.display = show ? 'block' : 'none';
+            const spinner = document.getElementById('loadingSpinner');
+            if (spinner) {
+                spinner.style.display = show ? 'block' : 'none';
+            }
         }
         
         function formatDate(dateString) {
