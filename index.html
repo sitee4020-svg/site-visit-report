@@ -125,7 +125,7 @@
             margin: 10px 0;
             border: 1px solid var(--border-color);
             border-radius: 4px;
-            font-size: 16px; /* Prevents zoom on iOS */
+            font-size: 16px;
         }
 
         .login-container button {
@@ -218,15 +218,13 @@
         input[type="date"],
         input[type="number"],
         input[type="tel"],
-        input[type="email"],
-        input[type="password"],
         select,
         textarea {
             width: 100%;
             padding: 12px 15px;
             border: 1px solid var(--border-color);
             border-radius: 6px;
-            font-size: 16px; /* Prevents zoom on iOS */
+            font-size: 16px;
             transition: all 0.3s;
             background-color: #f9f9f9;
             touch-action: manipulation;
@@ -240,22 +238,6 @@
             box-shadow: 0 0 0 3px rgba(44, 110, 73, 0.1);
         }
 
-        /* Mobile-friendly date inputs */
-        input[type="date"] {
-            min-height: 44px;
-        }
-
-        /* Mobile-friendly number inputs */
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
         .checkbox-group,
         .radio-group {
             display: flex;
@@ -265,12 +247,7 @@
             border-radius: 4px;
             transition: background 0.2s;
             touch-action: manipulation;
-            min-height: 44px; /* Better touch target */
-        }
-
-        .checkbox-group:hover,
-        .radio-group:hover {
-            background-color: #f0f0f0;
+            min-height: 44px;
         }
 
         .checkbox-group input,
@@ -310,12 +287,7 @@
             border: 1px solid #dee2e6;
             transition: all 0.2s;
             touch-action: manipulation;
-            min-height: 44px; /* Better touch target */
-        }
-
-        .project-item:hover {
-            border-color: var(--primary-color);
-            box-shadow: 0 2px 8px rgba(44, 110, 73, 0.1);
+            min-height: 44px;
         }
 
         .project-item input {
@@ -338,10 +310,6 @@
             text-align: center;
             background-color: white;
             transition: border-color 0.3s;
-        }
-
-        .image-box:hover {
-            border-color: var(--primary-color);
         }
 
         .image-preview {
@@ -371,11 +339,7 @@
             min-height: 44px;
         }
 
-        .upload-btn:hover {
-            background-color: var(--primary-dark);
-        }
-
-        /* Signature Section - Fixed for mobile */
+        /* Signature Section */
         .signature-area {
             margin-top: 30px;
             display: flex;
@@ -499,10 +463,6 @@
             color: white;
         }
 
-        .btn-print:hover {
-            background-color: #2980b9;
-        }
-
         /* Admin Panel Styles */
         .admin-panel {
             display: none;
@@ -580,11 +540,6 @@
             color: white;
         }
 
-        .edit-btn {
-            background-color: var(--warning-color);
-            color: white;
-        }
-
         .delete-btn {
             background-color: var(--danger-color);
             color: white;
@@ -601,7 +556,6 @@
             background-color: rgba(0, 0, 0, 0.7);
             z-index: 1000;
             overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
 
         .modal-content {
@@ -634,7 +588,6 @@
             max-height: 70vh;
             overflow-y: auto;
             padding-right: 10px;
-            -webkit-overflow-scrolling: touch;
         }
 
         /* Status Messages */
@@ -762,11 +715,6 @@
             .data-controls {
                 flex-direction: column;
             }
-            
-            .data-controls input,
-            .data-controls select {
-                min-width: 100%;
-            }
         }
 
         @media (max-width: 480px) {
@@ -784,11 +732,6 @@
             
             .reports-table {
                 font-size: 0.9rem;
-            }
-            
-            .reports-table th,
-            .reports-table td {
-                padding: 8px 10px;
             }
         }
 
@@ -817,7 +760,7 @@
     </style>
 </head>
 <body>
-    <!-- Login Screen (Initially shown) -->
+    <!-- Login Screen -->
     <div id="loginScreen" class="login-container">
         <h2><i class="fas fa-user-shield"></i> GK Energy Login</h2>
         <div id="loginMessage" class="status-message"></div>
@@ -832,10 +775,10 @@
         </div>
     </div>
 
-    <!-- Main Application (Initially hidden) -->
+    <!-- Main Application -->
     <div id="appContainer" style="display: none;">
         <div class="container">
-            <!-- Header with Mode Toggle -->
+            <!-- Header -->
             <div class="app-header">
                 <div class="logo">
                     <i class="fas fa-solar-panel"></i>
@@ -874,8 +817,7 @@
                     <!-- Report Header -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-calendar-alt"></i>
-                            REPORT INFORMATION
+                            <i class="fas fa-calendar-alt"></i> REPORT INFORMATION
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -896,8 +838,7 @@
                     <!-- Farmer Details -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-user-farmer"></i>
-                            FARMER DETAILS
+                            <i class="fas fa-user-farmer"></i> FARMER DETAILS
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -935,46 +876,16 @@
                             <div class="form-group">
                                 <label>PROJECT NAME</label>
                                 <div class="project-grid">
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MSKPY" id="projectMSKPY">
-                                        <label for="projectMSKPY">MSKPY</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="SECI" id="projectSECI">
-                                        <label for="projectSECI">SECI</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="KUSUM" id="projectKUSUM">
-                                        <label for="projectKUSUM">KUSUM</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MTS" id="projectMTS">
-                                        <label for="projectMTS">MTS</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MEDA PH 2" id="projectMEDAPH2">
-                                        <label for="projectMEDAPH2">MEDA PH 2</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MEDA PH 3" id="projectMEDAPH3">
-                                        <label for="projectMEDAPH3">MEDA PH 3</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MEDA PH 4" id="projectMEDAPH4">
-                                        <label for="projectMEDAPH4">MEDA PH 4</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MEDA PH 5" id="projectMEDAPH5">
-                                        <label for="projectMEDAPH5">MEDA PH 5</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MEDA PH 6" id="projectMEDAPH6">
-                                        <label for="projectMEDAPH6">MEDA PH 6</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="project" value="MEDA PH 7" id="projectMEDAPH7">
-                                        <label for="projectMEDAPH7">MEDA PH 7</label>
-                                    </div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MSKPY" id="projectMSKPY"><label for="projectMSKPY">MSKPY</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="SECI" id="projectSECI"><label for="projectSECI">SECI</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="KUSUM" id="projectKUSUM"><label for="projectKUSUM">KUSUM</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MTS" id="projectMTS"><label for="projectMTS">MTS</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MEDA PH 2" id="projectMEDAPH2"><label for="projectMEDAPH2">MEDA PH 2</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MEDA PH 3" id="projectMEDAPH3"><label for="projectMEDAPH3">MEDA PH 3</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MEDA PH 4" id="projectMEDAPH4"><label for="projectMEDAPH4">MEDA PH 4</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MEDA PH 5" id="projectMEDAPH5"><label for="projectMEDAPH5">MEDA PH 5</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MEDA PH 6" id="projectMEDAPH6"><label for="projectMEDAPH6">MEDA PH 6</label></div>
+                                    <div class="project-item"><input type="checkbox" name="project" value="MEDA PH 7" id="projectMEDAPH7"><label for="projectMEDAPH7">MEDA PH 7</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1003,50 +914,27 @@
                     <!-- Product Details -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-industry"></i>
-                            PRODUCT DETAILS
+                            <i class="fas fa-industry"></i> PRODUCT DETAILS
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Product Type</label>
                                 <div class="radio-container">
-                                    <div class="radio-group">
-                                        <input type="radio" name="productType" value="Solar Water Pump" id="solarWaterPump">
-                                        <label for="solarWaterPump">Solar Water Pump</label>
-                                    </div>
-                                    <div class="radio-group">
-                                        <input type="radio" name="productType" value="Solar Rooftop" id="solarRooftop">
-                                        <label for="solarRooftop">Solar Rooftop</label>
-                                    </div>
-                                    <div class="radio-group">
-                                        <input type="radio" name="productType" value="Solar Off-Grid" id="solarOffGrid">
-                                        <label for="solarOffGrid">Solar Off-Grid System</label>
-                                    </div>
+                                    <div class="radio-group"><input type="radio" name="productType" value="Solar Water Pump" id="solarWaterPump"><label for="solarWaterPump">Solar Water Pump</label></div>
+                                    <div class="radio-group"><input type="radio" name="productType" value="Solar Rooftop" id="solarRooftop"><label for="solarRooftop">Solar Rooftop</label></div>
+                                    <div class="radio-group"><input type="radio" name="productType" value="Solar Off-Grid" id="solarOffGrid"><label for="solarOffGrid">Solar Off-Grid System</label></div>
                                 </div>
                             </div>
                         </div>
                         
-                        <!-- Pump Type (Visible when Solar Water Pump is selected) -->
                         <div class="form-row" id="pumpTypeSection" style="display: none;">
                             <div class="form-group">
                                 <label>Pump Type</label>
                                 <div class="project-grid">
-                                    <div class="project-item">
-                                        <input type="checkbox" name="pumpType" value="WELI" id="pumpWELI">
-                                        <label for="pumpWELI">WELI</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="pumpType" value="RIVER" id="pumpRIVER">
-                                        <label for="pumpRIVER">RIVER</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="pumpType" value="BOREWELL" id="pumpBOREWELL">
-                                        <label for="pumpBOREWELL">BOREWELL</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="pumpType" value="FARMPOND" id="pumpFARMPOND">
-                                        <label for="pumpFARMPOND">FARMPOND</label>
-                                    </div>
+                                    <div class="project-item"><input type="checkbox" name="pumpType" value="WELI" id="pumpWELI"><label for="pumpWELI">WELI</label></div>
+                                    <div class="project-item"><input type="checkbox" name="pumpType" value="RIVER" id="pumpRIVER"><label for="pumpRIVER">RIVER</label></div>
+                                    <div class="project-item"><input type="checkbox" name="pumpType" value="BOREWELL" id="pumpBOREWELL"><label for="pumpBOREWELL">BOREWELL</label></div>
+                                    <div class="project-item"><input type="checkbox" name="pumpType" value="FARMPOND" id="pumpFARMPOND"><label for="pumpFARMPOND">FARMPOND</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1055,26 +943,11 @@
                             <div class="form-group">
                                 <label>Capacity</label>
                                 <div class="project-grid">
-                                    <div class="project-item">
-                                        <input type="checkbox" name="capacity" value="2HP" id="capacity2HP">
-                                        <label for="capacity2HP">2HP</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="capacity" value="3HP" id="capacity3HP">
-                                        <label for="capacity3HP">3HP</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="capacity" value="5HP" id="capacity5HP">
-                                        <label for="capacity5HP">5HP</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="capacity" value="7.5HP" id="capacity7.5HP">
-                                        <label for="capacity7.5HP">7.5HP</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="capacity" value="10HP" id="capacity10HP">
-                                        <label for="capacity10HP">10HP</label>
-                                    </div>
+                                    <div class="project-item"><input type="checkbox" name="capacity" value="2HP" id="capacity2HP"><label for="capacity2HP">2HP</label></div>
+                                    <div class="project-item"><input type="checkbox" name="capacity" value="3HP" id="capacity3HP"><label for="capacity3HP">3HP</label></div>
+                                    <div class="project-item"><input type="checkbox" name="capacity" value="5HP" id="capacity5HP"><label for="capacity5HP">5HP</label></div>
+                                    <div class="project-item"><input type="checkbox" name="capacity" value="7.5HP" id="capacity7.5HP"><label for="capacity7.5HP">7.5HP</label></div>
+                                    <div class="project-item"><input type="checkbox" name="capacity" value="10HP" id="capacity10HP"><label for="capacity10HP">10HP</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1083,27 +956,15 @@
                             <div class="form-group">
                                 <label>SUPPLY TYPE</label>
                                 <div class="radio-container">
-                                    <div class="radio-group">
-                                        <input type="radio" name="supplyType" value="AC" id="acSupply">
-                                        <label for="acSupply">AC</label>
-                                    </div>
-                                    <div class="radio-group">
-                                        <input type="radio" name="supplyType" value="DC" id="dcSupply">
-                                        <label for="dcSupply">DC</label>
-                                    </div>
+                                    <div class="radio-group"><input type="radio" name="supplyType" value="AC" id="acSupply"><label for="acSupply">AC</label></div>
+                                    <div class="radio-group"><input type="radio" name="supplyType" value="DC" id="dcSupply"><label for="dcSupply">DC</label></div>
                                 </div>
                             </div>
                             <div class="form-group">
                                 <label>SKU TYPE</label>
                                 <div class="radio-container">
-                                    <div class="radio-group">
-                                        <input type="radio" name="skuType" value="Monoblock" id="monoblock">
-                                        <label for="monoblock">Monoblock</label>
-                                    </div>
-                                    <div class="radio-group">
-                                        <input type="radio" name="skuType" value="Submersible" id="submersible">
-                                        <label for="submersible">Submersible</label>
-                                    </div>
+                                    <div class="radio-group"><input type="radio" name="skuType" value="Monoblock" id="monoblock"><label for="monoblock">Monoblock</label></div>
+                                    <div class="radio-group"><input type="radio" name="skuType" value="Submersible" id="submersible"><label for="submersible">Submersible</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1112,18 +973,9 @@
                             <div class="form-group">
                                 <label>Controller MAKE</label>
                                 <div class="project-grid">
-                                    <div class="project-item">
-                                        <input type="checkbox" name="controllerMake" value="GK" id="controllerGK">
-                                        <label for="controllerGK">GK</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="controllerMake" value="MIRA" id="controllerMIRA">
-                                        <label for="controllerMIRA">MIRA</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="controllerMake" value="SSPL" id="controllerSSPL">
-                                        <label for="controllerSSPL">SSPL</label>
-                                    </div>
+                                    <div class="project-item"><input type="checkbox" name="controllerMake" value="GK" id="controllerGK"><label for="controllerGK">GK</label></div>
+                                    <div class="project-item"><input type="checkbox" name="controllerMake" value="MIRA" id="controllerMIRA"><label for="controllerMIRA">MIRA</label></div>
+                                    <div class="project-item"><input type="checkbox" name="controllerMake" value="SSPL" id="controllerSSPL"><label for="controllerSSPL">SSPL</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1136,18 +988,9 @@
                             <div class="form-group">
                                 <label>MOTOR MAKE</label>
                                 <div class="project-grid">
-                                    <div class="project-item">
-                                        <input type="checkbox" name="motorMake" value="Silver" id="motorSilver">
-                                        <label for="motorSilver">Silver</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="motorMake" value="ECOZEN" id="motorECOZEN">
-                                        <label for="motorECOZEN">ECOZEN</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="motorMake" value="OSWAL" id="motorOSWAL">
-                                        <label for="motorOSWAL">OSWAL</label>
-                                    </div>
+                                    <div class="project-item"><input type="checkbox" name="motorMake" value="Silver" id="motorSilver"><label for="motorSilver">Silver</label></div>
+                                    <div class="project-item"><input type="checkbox" name="motorMake" value="ECOZEN" id="motorECOZEN"><label for="motorECOZEN">ECOZEN</label></div>
+                                    <div class="project-item"><input type="checkbox" name="motorMake" value="OSWAL" id="motorOSWAL"><label for="motorOSWAL">OSWAL</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1190,11 +1033,10 @@
                     <!-- Image Upload -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-camera"></i>
-                            IMAGE UPLOAD FOR VERIFICATION
+                            <i class="fas fa-camera"></i> IMAGE UPLOAD
                         </div>
                         <div class="image-upload-section">
-                            <p>Upload photos for verification (Maximum 3 images, JPG/PNG format, max 5MB each)</p>
+                            <p>Upload photos for verification (Max 3 images, JPG/PNG, max 5MB each)</p>
                             <div class="image-container">
                                 <div class="image-box">
                                     <h4><i class="fas fa-tools"></i> Equipment Photo</h4>
@@ -1227,8 +1069,7 @@
                     <!-- Repair Material Utilization -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-tools"></i>
-                            REPAIR MATERIAL UTILIZATION
+                            <i class="fas fa-tools"></i> REPAIR MATERIAL UTILIZATION
                         </div>
                         <div class="form-row">
                             <div class="form-group">
@@ -1291,25 +1132,15 @@
                     <!-- Repairing Details -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-wrench"></i>
-                            REPAIRING DETAILS
+                            <i class="fas fa-wrench"></i> REPAIRING DETAILS
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Material Submitted at ASC</label>
                                 <div class="project-grid">
-                                    <div class="project-item">
-                                        <input type="checkbox" name="materialSubmitted" value="MOTOR" id="materialMOTOR">
-                                        <label for="materialMOTOR">MOTOR</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="materialSubmitted" value="PUMP" id="materialPUMP">
-                                        <label for="materialPUMP">PUMP</label>
-                                    </div>
-                                    <div class="project-item">
-                                        <input type="checkbox" name="materialSubmitted" value="PUMPSET" id="materialPUMPSET">
-                                        <label for="materialPUMPSET">PUMPSET</label>
-                                    </div>
+                                    <div class="project-item"><input type="checkbox" name="materialSubmitted" value="MOTOR" id="materialMOTOR"><label for="materialMOTOR">MOTOR</label></div>
+                                    <div class="project-item"><input type="checkbox" name="materialSubmitted" value="PUMP" id="materialPUMP"><label for="materialPUMP">PUMP</label></div>
+                                    <div class="project-item"><input type="checkbox" name="materialSubmitted" value="PUMPSET" id="materialPUMPSET"><label for="materialPUMPSET">PUMPSET</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1339,14 +1170,8 @@
                             <div class="form-group">
                                 <label>Submitted BY</label>
                                 <div class="radio-container">
-                                    <div class="radio-group">
-                                        <input type="radio" name="submittedBy" value="FARMER" id="farmerSubmitted">
-                                        <label for="farmerSubmitted">FARMER</label>
-                                    </div>
-                                    <div class="radio-group">
-                                        <input type="radio" name="submittedBy" value="Site Engineer" id="engineerSubmitted">
-                                        <label for="engineerSubmitted">Site Engineer</label>
-                                    </div>
+                                    <div class="radio-group"><input type="radio" name="submittedBy" value="FARMER" id="farmerSubmitted"><label for="farmerSubmitted">FARMER</label></div>
+                                    <div class="radio-group"><input type="radio" name="submittedBy" value="Site Engineer" id="engineerSubmitted"><label for="engineerSubmitted">Site Engineer</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1355,25 +1180,15 @@
                     <!-- Technical Reading -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-chart-line"></i>
-                            TECHNICAL READING
+                            <i class="fas fa-chart-line"></i> TECHNICAL READING
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Resistance Values</label>
                                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                                    <div>
-                                        <label>RY(Ω)</label>
-                                        <input type="number" id="resistanceRY" step="0.01" placeholder="0.00">
-                                    </div>
-                                    <div>
-                                        <label>RB(Ω)</label>
-                                        <input type="number" id="resistanceRB" step="0.01" placeholder="0.00">
-                                    </div>
-                                    <div>
-                                        <label>YB(Ω)</label>
-                                        <input type="number" id="resistanceYB" step="0.01" placeholder="0.00">
-                                    </div>
+                                    <div><label>RY(Ω)</label><input type="number" id="resistanceRY" step="0.01" placeholder="0.00"></div>
+                                    <div><label>RB(Ω)</label><input type="number" id="resistanceRB" step="0.01" placeholder="0.00"></div>
+                                    <div><label>YB(Ω)</label><input type="number" id="resistanceYB" step="0.01" placeholder="0.00"></div>
                                 </div>
                             </div>
                         </div>
@@ -1382,18 +1197,9 @@
                             <div class="form-group">
                                 <label>Current Values</label>
                                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                                    <div>
-                                        <label>R(amp)</label>
-                                        <input type="number" id="currentR" step="0.01" placeholder="0.00">
-                                    </div>
-                                    <div>
-                                        <label>Y(amp)</label>
-                                        <input type="number" id="currentY" step="0.01" placeholder="0.00">
-                                    </div>
-                                    <div>
-                                        <label>B(amp)</label>
-                                        <input type="number" id="currentB" step="0.01" placeholder="0.00">
-                                    </div>
+                                    <div><label>R(amp)</label><input type="number" id="currentR" step="0.01" placeholder="0.00"></div>
+                                    <div><label>Y(amp)</label><input type="number" id="currentY" step="0.01" placeholder="0.00"></div>
+                                    <div><label>B(amp)</label><input type="number" id="currentB" step="0.01" placeholder="0.00"></div>
                                 </div>
                             </div>
                         </div>
@@ -1402,18 +1208,9 @@
                             <div class="form-group">
                                 <label>Motor Voltage</label>
                                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                                    <div>
-                                        <label>RY(V)</label>
-                                        <input type="number" id="voltageRY" step="0.1" placeholder="0.0">
-                                    </div>
-                                    <div>
-                                        <label>RB(V)</label>
-                                        <input type="number" id="voltageRB" step="0.1" placeholder="0.0">
-                                    </div>
-                                    <div>
-                                        <label>YB(V)</label>
-                                        <input type="number" id="voltageYB" step="0.1" placeholder="0.0">
-                                    </div>
+                                    <div><label>RY(V)</label><input type="number" id="voltageRY" step="0.1" placeholder="0.0"></div>
+                                    <div><label>RB(V)</label><input type="number" id="voltageRB" step="0.1" placeholder="0.0"></div>
+                                    <div><label>YB(V)</label><input type="number" id="voltageYB" step="0.1" placeholder="0.0"></div>
                                 </div>
                             </div>
                         </div>
@@ -1422,14 +1219,8 @@
                             <div class="form-group">
                                 <label>PV Voltage</label>
                                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                                    <div>
-                                        <label>FULL LOAD VDC</label>
-                                        <input type="number" id="fullLoadVDC" step="0.1" placeholder="0.0">
-                                    </div>
-                                    <div>
-                                        <label>NO LOAD VDC</label>
-                                        <input type="number" id="noLoadVDC" step="0.1" placeholder="0.0">
-                                    </div>
+                                    <div><label>FULL LOAD VDC</label><input type="number" id="fullLoadVDC" step="0.1" placeholder="0.0"></div>
+                                    <div><label>NO LOAD VDC</label><input type="number" id="noLoadVDC" step="0.1" placeholder="0.0"></div>
                                 </div>
                             </div>
                             <div class="form-group">
@@ -1442,18 +1233,9 @@
                             <div class="form-group">
                                 <label>PV Current</label>
                                 <div style="display: flex; gap: 15px; flex-wrap: wrap;">
-                                    <div>
-                                        <label>PV Current(A)</label>
-                                        <input type="number" id="pvCurrent" step="0.01" placeholder="0.00">
-                                    </div>
-                                    <div>
-                                        <label>Motor Current(A)</label>
-                                        <input type="number" id="motorCurrent" step="0.01" placeholder="0.00">
-                                    </div>
-                                    <div>
-                                        <label>Water Discharge LPM</label>
-                                        <input type="number" id="waterDischarge" step="0.1" placeholder="0.0">
-                                    </div>
+                                    <div><label>PV Current(A)</label><input type="number" id="pvCurrent" step="0.01" placeholder="0.00"></div>
+                                    <div><label>Motor Current(A)</label><input type="number" id="motorCurrent" step="0.01" placeholder="0.00"></div>
+                                    <div><label>Water Discharge LPM</label><input type="number" id="waterDischarge" step="0.1" placeholder="0.0"></div>
                                 </div>
                             </div>
                         </div>
@@ -1492,21 +1274,14 @@
                     <!-- Complaint Status & Comments -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-clipboard-check"></i>
-                            COMPLAINT STATUS & COMMENTS
+                            <i class="fas fa-clipboard-check"></i> COMPLAINT STATUS & COMMENTS
                         </div>
                         <div class="form-row">
                             <div class="form-group">
                                 <label>Complaint Status</label>
                                 <div class="radio-container">
-                                    <div class="radio-group">
-                                        <input type="radio" name="status" value="Resolved" id="statusResolved">
-                                        <label for="statusResolved">Resolved</label>
-                                    </div>
-                                    <div class="radio-group">
-                                        <input type="radio" name="status" value="Not Resolved" id="statusNotResolved">
-                                        <label for="statusNotResolved">Not Resolved</label>
-                                    </div>
+                                    <div class="radio-group"><input type="radio" name="status" value="Resolved" id="statusResolved"><label for="statusResolved">Resolved</label></div>
+                                    <div class="radio-group"><input type="radio" name="status" value="Not Resolved" id="statusNotResolved"><label for="statusNotResolved">Not Resolved</label></div>
                                 </div>
                             </div>
                         </div>
@@ -1526,11 +1301,10 @@
                         </div>
                     </div>
 
-                    <!-- Signature Section - FIXED FOR MOBILE -->
+                    <!-- Signature Section -->
                     <div class="section">
                         <div class="section-title">
-                            <i class="fas fa-signature"></i>
-                            SIGNATURES
+                            <i class="fas fa-signature"></i> SIGNATURES
                         </div>
                         <div class="signature-area">
                             <div class="signature-box">
@@ -1574,7 +1348,7 @@
                         <button type="button" class="btn btn-print" onclick="printForm()">
                             <i class="fas fa-print"></i> Print Report
                         </button>
-                        <button type="button" class="btn btn-submit" onclick="submitForm()">
+                        <button type="button" class="btn btn-submit" onclick="handleSubmit()">
                             <i class="fas fa-paper-plane"></i> Submit Report
                         </button>
                     </div>
@@ -1734,28 +1508,11 @@
                 document.getElementById('engineerName').value = currentUser.name;
             }
             
-            // Fix for date inputs on mobile
-            document.querySelectorAll('input[type="date"]').forEach(input => {
-                input.addEventListener('focus', function() {
-                    this.type = 'date';
-                });
-                input.addEventListener('blur', function() {
-                    if (!this.value) {
-                        this.type = 'text';
-                        this.placeholder = 'YYYY-MM-DD';
-                    }
-                });
-            });
-            
             // Initialize image upload
             initImageUpload();
             
-            // Prevent form submission on Enter key
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Enter' && e.target.type !== 'textarea') {
-                    e.preventDefault();
-                }
-            });
+            // Debug: Check if localStorage is working
+            console.log('LocalStorage available:', typeof localStorage !== 'undefined');
         });
 
         // Enhanced signature canvas functionality
@@ -1860,33 +1617,20 @@
             canvas.addEventListener('mouseup', stopDrawing);
             canvas.addEventListener('mouseout', stopDrawing);
             
-            // Touch events with proper prevention
+            // Touch events
             canvas.addEventListener('touchstart', (e) => {
-                if (e.cancelable) {
-                    e.preventDefault();
-                }
+                e.preventDefault();
                 startDrawing(e);
             }, { passive: false });
             
             canvas.addEventListener('touchmove', (e) => {
-                if (e.cancelable) {
-                    e.preventDefault();
-                }
+                e.preventDefault();
                 draw(e);
             }, { passive: false });
             
             canvas.addEventListener('touchend', (e) => {
-                if (e.cancelable) {
-                    e.preventDefault();
-                }
+                e.preventDefault();
                 stopDrawing();
-            }, { passive: false });
-            
-            // Prevent page scrolling when touching canvas
-            container.addEventListener('touchmove', (e) => {
-                if (e.target === canvas) {
-                    e.preventDefault();
-                }
             }, { passive: false });
         }
         
@@ -1900,30 +1644,15 @@
             if (placeholder) {
                 placeholder.style.display = 'block';
             }
-            
-            showMessage('Signature cleared', 'success');
         }
         
         function saveSignature(canvasId, placeholderId) {
-            const canvas = document.getElementById(canvasId);
-            const ctx = canvas.getContext('2d');
-            
-            // Check if signature is empty
-            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
-            const isEmpty = Array.from(imageData.data).every(value => value === 0);
-            
-            if (isEmpty) {
-                showMessage('Please draw a signature first', 'error');
-                return;
-            }
-            
             // Hide placeholder
             const placeholder = document.getElementById(placeholderId);
             if (placeholder) {
                 placeholder.style.display = 'none';
             }
-            
-            showMessage('Signature saved successfully', 'success');
+            showMessage('Signature saved', 'success');
         }
         
         function getSignatureData(canvasId) {
@@ -1940,14 +1669,12 @@
                     const preview = document.getElementById(previewId);
                     
                     if (file) {
-                        // Check file size (5MB max)
                         if (file.size > 5 * 1024 * 1024) {
                             showMessage('File size must be less than 5MB', 'error');
                             this.value = '';
                             return;
                         }
                         
-                        // Check file type
                         if (!file.type.match('image/jpeg') && !file.type.match('image/png')) {
                             showMessage('Only JPG and PNG images are allowed', 'error');
                             this.value = '';
@@ -1986,7 +1713,6 @@
                     name: users[username].name
                 };
                 
-                // Save to localStorage
                 localStorage.setItem('gkCurrentUser', JSON.stringify(currentUser));
                 
                 showApp();
@@ -2009,7 +1735,6 @@
             document.getElementById('appContainer').style.display = 'block';
             document.getElementById('currentUser').textContent = currentUser.name;
             
-            // Load reports if admin
             if (currentUser.role === 'admin') {
                 loadReports();
                 updateDashboardStats();
@@ -2059,9 +1784,9 @@
             }
         }
 
-        // Form submission - FIXED FOR GITHUB PAGES
-        function submitForm() {
-            showLoading(true);
+        // Main submit function - SIMPLIFIED AND DEBUGGED
+        function handleSubmit() {
+            console.log('Submit button clicked');
             
             // Validate required fields
             const requiredFields = ['engineerName', 'farmerName', 'phone', 'state', 'district', 'village'];
@@ -2079,10 +1804,8 @@
             
             // Check if at least one project is selected
             const projects = Array.from(document.querySelectorAll('input[name="project"]:checked')).map(cb => cb.value);
-            
             if (projects.length === 0) {
                 showMessage('Please select at least one project', 'error');
-                showLoading(false);
                 return;
             }
             
@@ -2090,17 +1813,18 @@
             const statusSelected = document.querySelector('input[name="status"]:checked');
             if (!statusSelected) {
                 showMessage('Please select complaint status', 'error');
-                showLoading(false);
                 return;
             }
             
             if (!isValid) {
                 showMessage('Please fill all required fields (marked with *)', 'error');
-                showLoading(false);
                 return;
             }
             
-            // Collect form data
+            // Show loading
+            showLoading(true);
+            
+            // Collect basic form data
             const formData = {
                 reportId: document.getElementById('reportId').value,
                 reportDate: document.getElementById('reportDate').value,
@@ -2110,168 +1834,107 @@
                 state: document.getElementById('state').value,
                 district: document.getElementById('district').value,
                 village: document.getElementById('village').value,
-                complaintNumber: document.getElementById('complaintNumber').value,
-                complaintDate: document.getElementById('complaintDate').value,
-                visitDate: document.getElementById('visitDate').value,
-                complaintDetails: document.getElementById('complaintDetails').value,
                 projects: projects,
-                farmerSignature: getSignatureData('farmerSignature'),
-                engineerSignature: getSignatureData('engineerSignature'),
                 submissionDate: new Date().toISOString(),
                 status: statusSelected.value,
                 submittedBy: currentUser.username
             };
             
-            // Collect product details
+            // Add other optional fields
+            const optionalFields = ['complaintNumber', 'complaintDate', 'visitDate', 'complaintDetails', 
+                                  'controllerId', 'motorSerial', 'pumpSerial', 'oldPCB', 'newPCB',
+                                  'ascName', 'submitDate', 'faultDetails', 'beneficiaryComment', 
+                                  'engineerRemarks', 'panelMC4', 'controllerMC4', 'junctionBox', 
+                                  'totalPanel', 'resistanceRY', 'resistanceRB', 'resistanceYB',
+                                  'currentR', 'currentY', 'currentB', 'voltageRY', 'voltageRB', 
+                                  'voltageYB', 'fullLoadVDC', 'noLoadVDC', 'frequency', 'pvCurrent',
+                                  'motorCurrent', 'waterDischarge', 'totalHead', 'waterLevel', 
+                                  'pumpDepth', 'pipelineLength', 'pipeSize', 'pipelineElevation'];
+            
+            optionalFields.forEach(field => {
+                const element = document.getElementById(field);
+                if (element && element.value) {
+                    formData[field] = element.value;
+                }
+            });
+            
+            // Add checkboxes
+            const checkboxes = ['toggleSwitch', 'dcCable', 'mcb', 'display'];
+            checkboxes.forEach(id => {
+                const checkbox = document.getElementById(id);
+                if (checkbox) {
+                    formData[id] = checkbox.checked;
+                }
+            });
+            
+            // Add radio and checkbox groups
             const productType = document.querySelector('input[name="productType"]:checked');
-            if (productType) {
-                formData.productType = productType.value;
-            }
-            
-            const pumpTypes = Array.from(document.querySelectorAll('input[name="pumpType"]:checked')).map(cb => cb.value);
-            if (pumpTypes.length > 0) {
-                formData.pumpTypes = pumpTypes;
-            }
-            
-            const capacities = Array.from(document.querySelectorAll('input[name="capacity"]:checked')).map(cb => cb.value);
-            if (capacities.length > 0) {
-                formData.capacities = capacities;
-            }
+            if (productType) formData.productType = productType.value;
             
             const supplyType = document.querySelector('input[name="supplyType"]:checked');
-            if (supplyType) {
-                formData.supplyType = supplyType.value;
-            }
+            if (supplyType) formData.supplyType = supplyType.value;
             
             const skuType = document.querySelector('input[name="skuType"]:checked');
-            if (skuType) {
-                formData.skuType = skuType.value;
-            }
-            
-            const controllerMakes = Array.from(document.querySelectorAll('input[name="controllerMake"]:checked')).map(cb => cb.value);
-            if (controllerMakes.length > 0) {
-                formData.controllerMakes = controllerMakes;
-            }
-            
-            formData.controllerId = document.getElementById('controllerId').value;
-            
-            const motorMakes = Array.from(document.querySelectorAll('input[name="motorMake"]:checked')).map(cb => cb.value);
-            if (motorMakes.length > 0) {
-                formData.motorMakes = motorMakes;
-            }
-            
-            formData.motorSerial = document.getElementById('motorSerial').value;
-            formData.pumpSerial = document.getElementById('pumpSerial').value;
-            
-            const pumpModels = Array.from(document.querySelectorAll('input[name="pump"]:checked')).map(cb => cb.value);
-            if (pumpModels.length > 0) {
-                formData.pumpModels = pumpModels;
-            }
-            
-            // Collect repair material data
-            formData.panelMC4 = document.getElementById('panelMC4').value;
-            formData.controllerMC4 = document.getElementById('controllerMC4').value;
-            formData.toggleSwitch = document.getElementById('toggleSwitch').checked;
-            formData.dcCable = document.getElementById('dcCable').checked;
-            formData.oldPCB = document.getElementById('oldPCB').value;
-            formData.newPCB = document.getElementById('newPCB').value;
-            formData.mcb = document.getElementById('mcb').checked;
-            formData.display = document.getElementById('display').checked;
-            formData.junctionBox = document.getElementById('junctionBox').value;
-            formData.totalPanel = document.getElementById('totalPanel').value;
-            
-            // Collect repairing details
-            const materialSubmitted = Array.from(document.querySelectorAll('input[name="materialSubmitted"]:checked')).map(cb => cb.value);
-            if (materialSubmitted.length > 0) {
-                formData.materialSubmitted = materialSubmitted;
-            }
-            
-            formData.ascName = document.getElementById('ascName').value;
-            formData.submitDate = document.getElementById('submitDate').value;
-            formData.faultDetails = document.getElementById('faultDetails').value;
+            if (skuType) formData.skuType = skuType.value;
             
             const submittedBy = document.querySelector('input[name="submittedBy"]:checked');
-            if (submittedBy) {
-                formData.submittedTo = submittedBy.value;
-            }
+            if (submittedBy) formData.submittedTo = submittedBy.value;
             
-            // Collect technical readings
-            formData.resistanceRY = document.getElementById('resistanceRY').value;
-            formData.resistanceRB = document.getElementById('resistanceRB').value;
-            formData.resistanceYB = document.getElementById('resistanceYB').value;
-            formData.currentR = document.getElementById('currentR').value;
-            formData.currentY = document.getElementById('currentY').value;
-            formData.currentB = document.getElementById('currentB').value;
-            formData.voltageRY = document.getElementById('voltageRY').value;
-            formData.voltageRB = document.getElementById('voltageRB').value;
-            formData.voltageYB = document.getElementById('voltageYB').value;
-            formData.fullLoadVDC = document.getElementById('fullLoadVDC').value;
-            formData.noLoadVDC = document.getElementById('noLoadVDC').value;
-            formData.frequency = document.getElementById('frequency').value;
-            formData.pvCurrent = document.getElementById('pvCurrent').value;
-            formData.motorCurrent = document.getElementById('motorCurrent').value;
-            formData.waterDischarge = document.getElementById('waterDischarge').value;
-            formData.totalHead = document.getElementById('totalHead').value;
-            formData.waterLevel = document.getElementById('waterLevel').value;
-            formData.pumpDepth = document.getElementById('pumpDepth').value;
-            formData.pipelineLength = document.getElementById('pipelineLength').value;
-            formData.pipeSize = document.getElementById('pipeSize').value;
-            formData.pipelineElevation = document.getElementById('pipelineElevation').value;
+            // Add array fields
+            const arrayFields = ['pumpType', 'capacity', 'controllerMake', 'motorMake', 'pump', 'materialSubmitted'];
+            arrayFields.forEach(name => {
+                const elements = Array.from(document.querySelectorAll(`input[name="${name}"]:checked`)).map(cb => cb.value);
+                if (elements.length > 0) {
+                    formData[name] = elements;
+                }
+            });
             
-            // Collect comments
-            formData.beneficiaryComment = document.getElementById('beneficiaryComment').value;
-            formData.engineerRemarks = document.getElementById('engineerRemarks').value;
+            // Add signatures
+            formData.farmerSignature = getSignatureData('farmerSignature');
+            formData.engineerSignature = getSignatureData('engineerSignature');
             
-            // Get image data
+            // Add images
             formData.images = [];
             for (let i = 1; i <= 3; i++) {
                 const preview = document.getElementById(`preview${i}`);
-                if (preview.src && preview.src !== '' && !preview.src.includes('preview')) {
+                if (preview.src && preview.src.startsWith('data:image')) {
                     formData.images.push(preview.src);
                 }
             }
             
+            console.log('Form data collected:', formData);
+            
             // Save to localStorage
-            saveReport(formData);
-            
-            // Show success message
-            showMessage('Report submitted successfully!', 'success');
-            
-            // Reset form
-            setTimeout(() => {
-                resetForm();
-                showLoading(false);
-                
-                // Switch to admin mode to view the new report
-                if (currentUser.role === 'admin') {
-                    setTimeout(() => switchMode('admin'), 500);
-                }
-            }, 1000);
-        }
-        
-        function saveReport(report) {
             try {
-                // Get existing reports or initialize empty array
                 let reports = [];
-                const storedReports = localStorage.getItem('gkEnergyReports');
-                if (storedReports) {
-                    reports = JSON.parse(storedReports);
+                const stored = localStorage.getItem('gkEnergyReports');
+                if (stored) {
+                    reports = JSON.parse(stored);
                 }
                 
-                // Add new report
-                reports.push(report);
-                
-                // Save back to localStorage
+                reports.push(formData);
                 localStorage.setItem('gkEnergyReports', JSON.stringify(reports));
                 
-                // Update dashboard stats
-                updateDashboardStats();
+                console.log('Report saved successfully');
                 
-                return true;
-            } catch (e) {
-                console.error('Error saving report:', e);
-                showMessage('Error saving report. Please try again.', 'error');
-                return false;
+                // Show success message
+                showMessage('Report submitted successfully! Report ID: ' + formData.reportId, 'success');
+                
+                // Reset form after delay
+                setTimeout(() => {
+                    resetForm();
+                    showLoading(false);
+                    
+                    // Switch to admin mode if admin
+                    if (currentUser.role === 'admin') {
+                        setTimeout(() => switchMode('admin'), 1000);
+                    }
+                }, 1500);
+                
+            } catch (error) {
+                console.error('Error saving report:', error);
+                showMessage('Error saving report: ' + error.message, 'error');
+                showLoading(false);
             }
         }
         
@@ -2297,7 +1960,6 @@
                     const matchesDate = !dateFilter || report.reportDate === dateFilter;
                     const matchesStatus = !statusFilter || report.status === statusFilter;
                     
-                    // Check if report contains the selected project
                     const matchesProject = !projectFilter || 
                         (report.projects && report.projects.includes(projectFilter));
                     
@@ -2311,7 +1973,6 @@
                 filteredReports.forEach((report, index) => {
                     const row = document.createElement('tr');
                     
-                    // Get first few projects for display
                     const projects = report.projects || [];
                     const displayProjects = projects.length > 0 
                         ? (projects.length > 2 ? projects.slice(0, 2).join(', ') + ' +' + (projects.length - 2) : projects.join(', '))
@@ -2359,18 +2020,15 @@
             try {
                 const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
                 
-                // Calculate stats
                 const totalReports = reports.length;
                 const resolvedReports = reports.filter(r => r.status === 'Resolved').length;
                 const unresolvedReports = totalReports - resolvedReports;
                 
-                // Get unique farmers
                 const uniqueFarmers = new Set();
                 reports.forEach(r => {
                     if (r.phone) uniqueFarmers.add(r.phone);
                 });
                 
-                // Update display
                 document.getElementById('totalReports').textContent = totalReports;
                 document.getElementById('resolvedReports').textContent = resolvedReports;
                 document.getElementById('unresolvedReports').textContent = unresolvedReports;
@@ -2390,7 +2048,6 @@
                     return;
                 }
                 
-                // Build modal content
                 let modalContent = `
                     <div class="report-details">
                         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
@@ -2412,37 +2069,8 @@
                                 <div><strong>Complaint Status:</strong><br><span style="padding: 2px 8px; border-radius: 4px; background-color: ${report.status === 'Resolved' ? '#d4edda' : '#f8d7da'}; color: ${report.status === 'Resolved' ? '#155724' : '#721c24'}">${report.status || 'Submitted'}</span></div>
                             </div>
                         </div>
-                        
-                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-project-diagram"></i> Project Details</h3>
-                            <p><strong>Projects:</strong> ${report.projects ? report.projects.join(', ') : 'N/A'}</p>
-                            <p><strong>Product Type:</strong> ${report.productType || 'N/A'}</p>
-                            <p><strong>Complaint Details:</strong> ${report.complaintDetails || 'N/A'}</p>
-                        </div>
                 `;
                 
-                // Add product details if available
-                if (report.productType) {
-                    modalContent += `
-                        <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
-                            <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-industry"></i> Product Details</h3>
-                            <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 15px;">
-                                ${report.pumpTypes ? `<div><strong>Pump Type:</strong><br>${report.pumpTypes.join(', ')}</div>` : ''}
-                                ${report.capacities ? `<div><strong>Capacity:</strong><br>${report.capacities.join(', ')}</div>` : ''}
-                                ${report.supplyType ? `<div><strong>Supply Type:</strong><br>${report.supplyType}</div>` : ''}
-                                ${report.skuType ? `<div><strong>SKU Type:</strong><br>${report.skuType}</div>` : ''}
-                                ${report.controllerMakes ? `<div><strong>Controller Make:</strong><br>${report.controllerMakes.join(', ')}</div>` : ''}
-                                ${report.controllerId ? `<div><strong>Controller ID:</strong><br>${report.controllerId}</div>` : ''}
-                                ${report.motorMakes ? `<div><strong>Motor Make:</strong><br>${report.motorMakes.join(', ')}</div>` : ''}
-                                ${report.motorSerial ? `<div><strong>Motor Serial:</strong><br>${report.motorSerial}</div>` : ''}
-                                ${report.pumpSerial ? `<div><strong>Pump Serial:</strong><br>${report.pumpSerial}</div>` : ''}
-                                ${report.pumpModels ? `<div><strong>Pump Models:</strong><br>${report.pumpModels.join(', ')}</div>` : ''}
-                            </div>
-                        </div>
-                    `;
-                }
-                
-                // Add images if available
                 if (report.images && report.images.length > 0) {
                     modalContent += `
                         <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
@@ -2464,7 +2092,6 @@
                     modalContent += `</div></div>`;
                 }
                 
-                // Add signatures if available
                 modalContent += `
                     <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 20px;">
                         <h3 style="color: #2c6e49; margin-bottom: 10px;"><i class="fas fa-signature"></i> Signatures</h3>
@@ -2483,7 +2110,6 @@
                 
                 modalContent += `</div>`;
                 
-                // Set modal content and show
                 document.getElementById('modalBody').innerHTML = modalContent;
                 document.getElementById('reportModal').style.display = 'block';
             } catch (e) {
@@ -2493,7 +2119,7 @@
         }
         
         function deleteReport(index) {
-            if (confirm('Are you sure you want to delete this report? This action cannot be undone.')) {
+            if (confirm('Are you sure you want to delete this report?')) {
                 try {
                     const reports = JSON.parse(localStorage.getItem('gkEnergyReports') || '[]');
                     reports.splice(index, 1);
@@ -2502,7 +2128,6 @@
                     updateDashboardStats();
                     showMessage('Report deleted successfully', 'success');
                 } catch (e) {
-                    console.error('Error deleting report:', e);
                     showMessage('Error deleting report', 'error');
                 }
             }
@@ -2517,16 +2142,13 @@
                     return;
                 }
                 
-                // Create CSV content
-                let csv = 'Report ID,Date,Farmer Name,Phone,Village,District,State,Projects,Status,Engineer,Complaint Details,Submission Date\n';
+                let csv = 'Report ID,Date,Farmer Name,Phone,Village,District,State,Projects,Status,Engineer,Submission Date\n';
                 
                 reports.forEach(report => {
                     const projects = report.projects ? report.projects.join('; ') : '';
-                    const complaintDetails = (report.complaintDetails || '').replace(/"/g, '""');
-                    csv += `"${report.reportId || ''}","${formatDate(report.reportDate)}","${report.farmerName || ''}","${report.phone || ''}","${report.village || ''}","${report.district || ''}","${report.state || ''}","${projects}","${report.status || ''}","${report.engineerName || ''}","${complaintDetails}","${formatDateTime(report.submissionDate)}"\n`;
+                    csv += `"${report.reportId || ''}","${formatDate(report.reportDate)}","${report.farmerName || ''}","${report.phone || ''}","${report.village || ''}","${report.district || ''}","${report.state || ''}","${projects}","${report.status || ''}","${report.engineerName || ''}","${formatDateTime(report.submissionDate)}"\n`;
                 });
                 
-                // Create download link
                 const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
                 const url = URL.createObjectURL(blob);
                 const link = document.createElement('a');
@@ -2538,18 +2160,16 @@
                 
                 showMessage('Export completed successfully', 'success');
             } catch (e) {
-                console.error('Error exporting data:', e);
                 showMessage('Error exporting data', 'error');
             }
         }
         
         function resetForm() {
-            if (confirm('Are you sure you want to reset the form? All unsaved data will be lost.')) {
+            if (confirm('Reset the form? All unsaved data will be lost.')) {
                 document.getElementById('siteVisitForm').reset();
                 clearSignature('farmerSignature', 'farmerPlaceholder');
                 clearSignature('engineerSignature', 'engineerPlaceholder');
                 
-                // Clear image previews
                 for (let i = 1; i <= 3; i++) {
                     const preview = document.getElementById(`preview${i}`);
                     preview.style.display = 'none';
@@ -2557,18 +2177,14 @@
                     document.getElementById(`image${i}`).value = '';
                 }
                 
-                // Generate new report ID
                 generateReportId();
                 
-                // Reset date fields
                 const today = new Date().toISOString().split('T')[0];
                 document.getElementById('reportDate').value = today;
                 document.getElementById('visitDate').value = today;
                 
-                // Hide pump type section
                 document.getElementById('pumpTypeSection').style.display = 'none';
                 
-                // Reset engineer name if user is engineer
                 if (currentUser && currentUser.role === 'engineer') {
                     document.getElementById('engineerName').value = currentUser.name;
                 }
@@ -2628,12 +2244,6 @@
                 closeModal();
             }
         };
-        
-        // Prevent default form submission
-        document.getElementById('siteVisitForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            return false;
-        });
     </script>
 </body>
 </html>
